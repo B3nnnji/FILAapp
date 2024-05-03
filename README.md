@@ -6,7 +6,7 @@ Funkcje aplikacji:
 
 2. Zarządzanie paczkami: Użytkownicy mogą kompletować, zarządzać oraz wyszukiwać paczki w systemie. Aplikacja zapewnia wygodne narzędzia do tworzenia, edycji oraz usuwania paczek.
 
-3. Zarządzanie klientami: Pracownicy mogą dodawać nowych klientów do bazy danych oraz aktualizować ich dane. FlowFinder umożliwia również wyszukiwanie klientów i przeglądanie ich historii.
+3. Zarządzanie klientami: Użytkownicy mogą dodawać nowych klientów do bazy danych oraz aktualizować ich dane. FlowFinder umożliwia również wyszukiwanie klientów i przeglądanie ich historii.
 
 4. Zarządzanie użytkownikami: Administratorzy mają możliwość dodawania nowych użytkowników do aplikacji oraz przypisywania im odpowiednich uprawnień. To pozwala na kontrolowanie dostępu do różnych funkcji aplikacji.
 
