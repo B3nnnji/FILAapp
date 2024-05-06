@@ -5,7 +5,7 @@ namespace FILAapp
     public partial class Logowanie : Form
     {
         private MySqlConnection connection;
-        private string connectionString = "Server=192.168.1.1;Database=sql_app;Uid=root;Pwd=root;";
+        private string connectionString = "Server=10.0.5.3;Database=sql_app;Uid=root;Pwd=root;";
 
         private int userId;
         private string userName;
