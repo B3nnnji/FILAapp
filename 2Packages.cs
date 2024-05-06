@@ -40,14 +40,11 @@ namespace FILAapp
 
         private void Kompletowanie_Load(object sender, EventArgs e)
         {
-            if (loggedInUserName == "Jakub" && loggedInUserSurname == "Kopek")
+            if (userId == 1 || userId == 2)
             {
                 IsUserAdmin = true;
             }
-            else if (loggedInUserName == "Bartłomiej" && loggedInUserSurname == "Banaszak")
-            {
-                IsUserAdmin = true;
-            }
+
             menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
 
             LoadDataToComboBox();

@@ -275,11 +275,7 @@ namespace FILAapp
 
         private void Wyszukiwarka_Load_1(object sender, EventArgs e)
         {
-            if (loggedInUserName == "Jakub" && loggedInUserSurname == "Kopek")
-            {
-                IsUserAdmin = true;
-            }
-            else if (loggedInUserName == "Bartłomiej" && loggedInUserSurname == "Banaszak")
+            if (userId == 1 || userId == 2)
             {
                 IsUserAdmin = true;
             }

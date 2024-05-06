@@ -66,7 +66,7 @@ namespace FILAapp
         {
             string query = "SELECT Id, Name, Surname FROM users WHERE Login=@Login";
 
-            using (MySqlConnection connection = new MySqlConnection("Server=10.0.5.3;Database=sql_app;Uid=root;Pwd=root;"))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
                 MySqlCommand cmd = new MySqlCommand(query, connection);
