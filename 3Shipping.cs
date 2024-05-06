@@ -14,7 +14,7 @@ namespace FILAapp
 {
     public partial class Wysyłka : Form
     {
-        private string connectionString = "Server=10.0.5.3;Database=sql_app;Uid=root;Pwd=root;";
+        private string connectionString = "Server=192.168.1.1;Database=sql_app;Uid=root;Pwd=root;";
         private int userId;
         private string loggedInUserName;
         private string loggedInUserSurname;
