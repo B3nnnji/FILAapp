@@ -1,0 +1,7 @@
+Wherever you find the following expression: 
+
+"Server=10.0.5.3;Database=sql_app;Uid=root;Pwd=root;"
+
+You should adjust it to match your database as in the example below: 
+
+"Server=YourServerIp;Database=YourDatabaseName;Uid=YourUsername;Pwd=YourPassword".
