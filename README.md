@@ -15,8 +15,11 @@ User Interface: The application offers an intuitive user interface that enables 
 Technologies Used in the Application:
 
 Programming Language: C#
+
 Database: MySQL (There is a guide on how to create a compatible database in Database config folder)
+
 Framework: .NET Framework
+
 The application is intended for a Polish company specializing in water meter management, providing it with an efficient tool for identification, management, and tracking of data related to water meters and clients.
 
 Application Screenshots:
