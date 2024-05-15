@@ -76,14 +76,38 @@ namespace FILAapp
         private void button2_Click(object sender, EventArgs e)
         {
             var selectedRows = dataGridView1.SelectedRows;
-
-            foreach (DataGridViewRow row in selectedRows)
+            DialogResult = MessageBox.Show("Czy napewno chcesz usunąć zaznaczonych klientów z bazy danych?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (DialogResult == DialogResult.Yes)
             {
-                int rowIndex = row.Index;
+                foreach (DataGridViewRow row in selectedRows)
+                {
+                    if (row.Selected)
+                    {
+                        string nip = row.Cells["NIP"].Value?.ToString() ?? string.Empty;
+                        UsunZBazyDanych(nip);
 
-                dataGridView1.Rows.RemoveAt(rowIndex);
+                        dataGridView1.Rows.Remove(row);
+                    }
+                }
+                dataGridView1.Refresh();
             }
         }
+
+        private void UsunZBazyDanych(string nip)
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM clients WHERE NIP = @nip";
+                using (var deleteCommand = new MySqlCommand(deleteQuery, connection))
+                {
+                    deleteCommand.Parameters.AddWithValue("@nip", nip);
+                    deleteCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
 
         private void button3_Click(object sender, EventArgs e)
         {

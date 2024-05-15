@@ -155,6 +155,7 @@
             // 
             checkedListBox1.BackColor = SystemColors.Window;
             checkedListBox1.BorderStyle = BorderStyle.FixedSingle;
+            checkedListBox1.CheckOnClick = true;
             checkedListBox1.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             checkedListBox1.FormattingEnabled = true;
             checkedListBox1.Items.AddRange(new object[] { "Wyszukaj po numerze paczki", "Wyszukaj po numerze seryjnym", "Wyszukaj po numerze NIP" });

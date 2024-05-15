@@ -9,9 +9,9 @@ namespace FILAapp
         private string connectionString = "Server=10.0.5.3;Database=sql_app;Uid=root;Pwd=root;";
 
         private int userId;
-        private string userName;
-        private string userSurname;
-        private string userType;
+        private string userName = "";
+        private string userSurname = "";
+        private string userType = "";
 
         public Logowanie()
         {

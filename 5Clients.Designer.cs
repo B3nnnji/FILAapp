@@ -124,7 +124,7 @@
             button3.BackColor = SystemColors.ScrollBar;
             button3.FlatStyle = FlatStyle.Popup;
             button3.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.Location = new Point(1298, 776);
+            button3.Location = new Point(430, 673);
             button3.Name = "button3";
             button3.Size = new Size(184, 69);
             button3.TabIndex = 3;
@@ -201,6 +201,7 @@
             // 
             panel1.Controls.Add(label1);
             panel1.Controls.Add(button2);
+            panel1.Controls.Add(button3);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(dataGridView1);
             panel1.Location = new Point(58, 73);
@@ -216,7 +217,6 @@
             ClientSize = new Size(1264, 921);
             Controls.Add(panel1);
             Controls.Add(labelUserInfo);
-            Controls.Add(button3);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
