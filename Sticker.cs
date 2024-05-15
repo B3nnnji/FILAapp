@@ -30,15 +30,12 @@ namespace FILAapp
         {
             Bitmap picImage = new Bitmap(panel1.Width, panel1.Height);
             panel1.DrawToBitmap(picImage, new Rectangle(0, 0, panel1.Width, panel1.Height));
-
             Bitmap image = new Bitmap(picImage);
-
             float quotient = 1;
             float margin = 20;
-
             float page_w = e.PageBounds.Width - (2 * margin);
             float page_h = e.PageBounds.Height - (2 * margin);
-
+            
             if (image.Width >= image.Height)
             {
                 quotient = page_w / image.Width;
@@ -47,10 +44,8 @@ namespace FILAapp
             {
                 quotient = image.Height / page_h;
             }
-
             float w = page_w;
             float h = image.Height * quotient;
-
             e.Graphics.DrawImage(image, margin - 7, margin - margin - margines, w + 30, h + 10);
         }
 
