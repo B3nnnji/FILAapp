@@ -12,7 +12,7 @@ namespace FILAapp
         private string userName;
         private string userSurname;
         private string userType;
-        
+
         public Logowanie()
         {
             InitializeComponent();

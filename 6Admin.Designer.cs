@@ -30,7 +30,6 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Admin));
             menuStrip1 = new MenuStrip();
             kompletowanieToolStripMenuItem = new ToolStripMenuItem();
@@ -41,6 +40,12 @@
             btnAdd = new Button();
             btnSave = new Button();
             dataGridView1 = new DataGridView();
+            workerNumber = new DataGridViewTextBoxColumn();
+            name = new DataGridViewTextBoxColumn();
+            surname = new DataGridViewTextBoxColumn();
+            login = new DataGridViewTextBoxColumn();
+            password = new DataGridViewTextBoxColumn();
+            workerType = new DataGridViewTextBoxColumn();
             label1 = new Label();
             btnSaveName = new Button();
             btnDeleteName = new Button();
@@ -51,12 +56,6 @@
             btnDel = new Button();
             button1 = new Button();
             panel1 = new Panel();
-            workerNumber = new DataGridViewTextBoxColumn();
-            name = new DataGridViewTextBoxColumn();
-            surname = new DataGridViewTextBoxColumn();
-            login = new DataGridViewTextBoxColumn();
-            password = new DataGridViewTextBoxColumn();
-            workerType = new DataGridViewTextBoxColumn();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -139,19 +138,51 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { workerNumber, name, surname, login, password, workerType });
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.Location = new Point(26, 46);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(701, 519);
             dataGridView1.TabIndex = 4;
+            // 
+            // workerNumber
+            // 
+            workerNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            workerNumber.HeaderText = "Numer pracownika";
+            workerNumber.Name = "workerNumber";
+            workerNumber.Width = 124;
+            // 
+            // name
+            // 
+            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            name.HeaderText = "Imię";
+            name.Name = "name";
+            name.Width = 56;
+            // 
+            // surname
+            // 
+            surname.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            surname.HeaderText = "Nazwisko";
+            surname.Name = "surname";
+            surname.Width = 85;
+            // 
+            // login
+            // 
+            login.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            login.HeaderText = "Login";
+            login.Name = "login";
+            login.Width = 63;
+            // 
+            // password
+            // 
+            password.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            password.HeaderText = "Hasło";
+            password.Name = "password";
+            password.Width = 65;
+            // 
+            // workerType
+            // 
+            workerType.HeaderText = "Typ";
+            workerType.Name = "workerType";
             // 
             // label1
             // 
@@ -192,24 +223,24 @@
             // dataGridView2
             // 
             dataGridView2.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { number, wmName });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { number, wmName });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Window;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridView2.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView2.Location = new Point(759, 46);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowTemplate.Height = 25;
@@ -281,46 +312,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1259, 641);
             panel1.TabIndex = 13;
-            // 
-            // workerNumber
-            // 
-            workerNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            workerNumber.HeaderText = "Numer pracownika";
-            workerNumber.Name = "workerNumber";
-            workerNumber.Width = 124;
-            // 
-            // name
-            // 
-            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            name.HeaderText = "Imię";
-            name.Name = "name";
-            name.Width = 56;
-            // 
-            // surname
-            // 
-            surname.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            surname.HeaderText = "Nazwisko";
-            surname.Name = "surname";
-            surname.Width = 85;
-            // 
-            // login
-            // 
-            login.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            login.HeaderText = "Login";
-            login.Name = "login";
-            login.Width = 63;
-            // 
-            // password
-            // 
-            password.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            password.HeaderText = "Hasło";
-            password.Name = "password";
-            password.Width = 65;
-            // 
-            // workerType
-            // 
-            workerType.HeaderText = "Typ";
-            workerType.Name = "workerType";
             // 
             // Admin
             // 

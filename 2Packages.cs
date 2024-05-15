@@ -350,7 +350,7 @@ namespace FILAapp
                         break;
                 }
             }
-            
+
             if (!isDataGridViewFilled)
             {
                 MessageBox.Show("Uzupełnij brakujące pola!.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
