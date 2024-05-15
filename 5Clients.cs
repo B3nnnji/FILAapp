@@ -84,6 +84,7 @@ namespace FILAapp
                     {
                         string nip = row.Cells["NIP"].Value?.ToString() ?? string.Empty;
                         UsunZBazyDanych(nip);
+                        
                         dataGridView1.Rows.Remove(row);
                     }
                 }
