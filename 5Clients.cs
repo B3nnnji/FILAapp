@@ -18,14 +18,15 @@ namespace FILAapp
         private string loggedInUserName;
         private string loggedInUserSurname;
         private int userId;
+        private string userType;
 
-
-        public Klienci(int userId, string loggedInUserName, string loggedInUserSurname)
+        public Klienci(int userId, string loggedInUserName, string loggedInUserSurname, string userType)
         {
             InitializeComponent();
             this.loggedInUserName = loggedInUserName;
             this.loggedInUserSurname = loggedInUserSurname;
             this.userId = userId;
+            this.userType = userType;
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
@@ -85,13 +86,11 @@ namespace FILAapp
             }
         }
 
-
-
         private bool IsUserAdmin = false;
 
         private void Klienci_Load_1(object sender, EventArgs e)
         {
-            if (userId == 1 || userId == 2)
+            if (userType == "admin")
             {
                 IsUserAdmin = true;
             }
@@ -99,6 +98,30 @@ namespace FILAapp
             menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
 
             WyswietlDaneKlientow();
+            PrzesunNaSrodek(panel1);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void Klienci_Resize(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel1);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void PrzesunNaSrodek(Control kontrolka)
+        {
+            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
+            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
+
+            kontrolka.Location = new Point(x, y);
+        }
+
+        private void UstawNaDolnymLewymRogu(Control kontrolka)
+        {
+            int x = 12;
+            int y = this.ClientSize.Height - kontrolka.Height;
+
+            kontrolka.Location = new Point(x, y);
         }
 
         private void WyswietlDaneKlientow()
@@ -132,35 +155,35 @@ namespace FILAapp
 
         private void kompletowanieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname);
+            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname, userType);
             form2.Show();
             this.Hide();
         }
 
         private void wyszukiwarkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname);
+            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
             this.Hide();
         }
 
         private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname);
+            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
             form3.Show();
             this.Hide();
         }
 
         private void Admin_Click(object sender, EventArgs e)
         {
-            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname);
+            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void wysyłkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname);
+            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }

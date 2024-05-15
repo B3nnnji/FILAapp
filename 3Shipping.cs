@@ -18,14 +18,16 @@ namespace FILAapp
         private int userId;
         private string loggedInUserName;
         private string loggedInUserSurname;
+        private string userType;
         private Kompletowanie mainForm;
 
-        public Wysyłka(int userId, string loggedInUserName, string loggedInUserSurname)
+        public Wysyłka(int userId, string loggedInUserName, string loggedInUserSurname, string userType)
         {
             InitializeComponent();
             this.userId = userId;
             this.loggedInUserName = loggedInUserName;
             this.loggedInUserSurname = loggedInUserSurname;
+            this.userType = userType;
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
@@ -110,12 +112,37 @@ namespace FILAapp
 
         private void Wysyłka_Load(object sender, EventArgs e)
         {
-            if (userId == 1 || userId == 2)
+            if (userType == "admin")
             {
                 IsUserAdmin = true;
             }
 
             menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
+
+            PrzesunNaSrodek(panel2);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void Wysyłka_Resize(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel2);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void PrzesunNaSrodek(Control kontrolka)
+        {
+            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
+            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
+
+            kontrolka.Location = new Point(x, y);
+        }
+
+        private void UstawNaDolnymLewymRogu(Control kontrolka)
+        {
+            int x = 12;
+            int y = this.ClientSize.Height - kontrolka.Height;
+
+            kontrolka.Location = new Point(x, y);
         }
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -199,35 +226,35 @@ namespace FILAapp
 
         private void wysyłkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname);
+            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void kompletowanieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname);
+            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname, userType);
             form2.Show();
             this.Hide();
         }
 
         private void wyszukiwarkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname);
+            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
             this.Hide();
         }
 
         private void administracjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname);
+            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname);
+            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
             form3.Show();
             this.Hide();
         }

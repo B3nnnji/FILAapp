@@ -45,8 +45,10 @@
             Admin = new ToolStripMenuItem();
             labelUserInfo = new Label();
             label1 = new Label();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -71,7 +73,7 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.Location = new Point(438, 115);
+            dataGridView1.Location = new Point(3, 42);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(1044, 625);
@@ -96,7 +98,7 @@
             button1.BackColor = SystemColors.ScrollBar;
             button1.FlatStyle = FlatStyle.Popup;
             button1.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(438, 776);
+            button1.Location = new Point(3, 673);
             button1.Name = "button1";
             button1.Size = new Size(184, 69);
             button1.TabIndex = 1;
@@ -109,7 +111,7 @@
             button2.BackColor = SystemColors.ScrollBar;
             button2.FlatStyle = FlatStyle.Popup;
             button2.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(868, 776);
+            button2.Location = new Point(863, 673);
             button2.Name = "button2";
             button2.Size = new Size(184, 69);
             button2.TabIndex = 2;
@@ -136,7 +138,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { kompletowanieToolStripMenuItem, wysyłkaToolStripMenuItem, wyszukiwarkaToolStripMenuItem, klienciToolStripMenuItem, Admin });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1904, 38);
+            menuStrip1.Size = new Size(1264, 38);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -179,7 +181,7 @@
             // 
             labelUserInfo.AutoSize = true;
             labelUserInfo.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            labelUserInfo.Location = new Point(12, 981);
+            labelUserInfo.Location = new Point(12, 890);
             labelUserInfo.Name = "labelUserInfo";
             labelUserInfo.Size = new Size(65, 22);
             labelUserInfo.TabIndex = 5;
@@ -189,35 +191,45 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(792, 80);
+            label1.Location = new Point(347, 7);
             label1.Name = "label1";
             label1.Size = new Size(337, 32);
             label1.TabIndex = 6;
             label1.Text = "DODAWANIE KLIENTÓW";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(dataGridView1);
+            panel1.Location = new Point(58, 73);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1050, 747);
+            panel1.TabIndex = 7;
             // 
             // Klienci
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveCaption;
-            ClientSize = new Size(1904, 1041);
-            Controls.Add(label1);
+            ClientSize = new Size(1264, 921);
+            Controls.Add(panel1);
             Controls.Add(labelUserInfo);
             Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(dataGridView1);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Klienci";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Klienci";
-            WindowState = FormWindowState.Maximized;
             Load += Klienci_Load_1;
+            Resize += Klienci_Resize;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -238,5 +250,6 @@
         private ToolStripMenuItem Admin;
         private Label labelUserInfo;
         private Label label1;
+        private Panel panel1;
     }
 }

@@ -19,13 +19,15 @@ namespace FILAapp
         private string loggedInUserName;
         private string loggedInUserSurname;
         private int userId;
+        private string userType;
 
-        public Admin(int userId, string loggedInUserName, string loggedInUserSurname)
+        public Admin(int userId, string loggedInUserName, string loggedInUserSurname, string userType)
         {
             InitializeComponent();
             this.loggedInUserName = loggedInUserName;
             this.loggedInUserSurname = loggedInUserSurname;
             this.userId = userId;
+            this.userType = userType;
         }
 
 
@@ -37,7 +39,7 @@ namespace FILAapp
         private bool IsUserAdmin = false;
         private void Admin_Load(object sender, EventArgs e)
         {
-            if (userId == 1 || userId == 2)
+            if (userType == "admin")
             {
                 IsUserAdmin = true;
             }
@@ -46,6 +48,20 @@ namespace FILAapp
 
             FillDataGridViewWorkers();
             LoadWatermeterNames();
+            PrzesunNaSrodek(panel1);
+        }
+
+        private void Admin_Resize(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel1);
+        }
+
+        private void PrzesunNaSrodek(Control kontrolka)
+        {
+            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
+            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
+
+            kontrolka.Location = new Point(x, y);
         }
 
         private void LoadWatermeterNames()
@@ -82,7 +98,7 @@ namespace FILAapp
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT Id, Name, Surname, Login, Password FROM users";
+                    string query = "SELECT Id, Name, Surname, Login, Password, Type FROM users";
                     MySqlCommand command = new MySqlCommand(query, connection);
                     MySqlDataReader reader = command.ExecuteReader();
 
@@ -95,8 +111,9 @@ namespace FILAapp
                         string surname = reader.GetString("Surname");
                         string login = reader.GetString("Login");
                         string password = reader.GetString("Password");
+                        string workerType = reader.GetString("Type");
 
-                        dataGridView1.Rows.Add(workerNumber, name, surname, login, password);
+                        dataGridView1.Rows.Add(workerNumber, name, surname, login, password, workerType);
                     }
                 }
             }
@@ -191,16 +208,18 @@ namespace FILAapp
                         string surName = row.Cells["surname"].Value.ToString();
                         string login = row.Cells["login"].Value.ToString();
                         string password = row.Cells["password"].Value.ToString();
+                        string workerType = row.Cells["workerType"].Value.ToString();
 
                         if (!IsDataExistInDatabase(connection, name, surName, login, password))
                         {
-                            string insertDataQuery = "INSERT INTO users (Login, Password, Name, Surname) VALUES (@Login, @Password, @Name, @Surname)";
+                            string insertDataQuery = "INSERT INTO users (Login, Password, Name, Surname, Type) VALUES (@Login, @Password, @Name, @Surname, @Type)";
                             using (MySqlCommand command = new MySqlCommand(insertDataQuery, connection))
                             {
                                 command.Parameters.AddWithValue("@Login", login);
-                                command.Parameters.AddWithValue("Password", password);
-                                command.Parameters.AddWithValue("Name", name);
-                                command.Parameters.AddWithValue("Surname", surName);
+                                command.Parameters.AddWithValue("@Password", password);
+                                command.Parameters.AddWithValue("@Name", name);
+                                command.Parameters.AddWithValue("@Surname", surName);
+                                command.Parameters.AddWithValue("@Type", workerType);
                                 command.ExecuteNonQuery();
                             }
                         }
@@ -226,35 +245,35 @@ namespace FILAapp
 
         private void Administracja_Click(object sender, EventArgs e)
         {
-            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname);
+            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void kompletowanieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname);
+            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname, userType);
             form2.Show();
             this.Hide();
         }
 
         private void wysyłkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname);
+            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void wyszukiwarkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname);
+            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
             this.Hide();
         }
 
         private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname);
+            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
             form3.Show();
             this.Hide();
         }
@@ -277,7 +296,7 @@ namespace FILAapp
                             }
                             else
                             {
-                                
+
                             }
                         }
                     }
@@ -432,7 +451,5 @@ namespace FILAapp
                 }
             }
         }
-
-
     }
 }

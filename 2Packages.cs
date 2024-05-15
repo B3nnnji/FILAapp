@@ -25,7 +25,8 @@ namespace FILAapp
         private string loggedInUserName;
         private string loggedInUserSurname;
         private int userId;
-        public Kompletowanie(int userId, string userName, string userSurname)
+        private string userType;
+        public Kompletowanie(int userId, string userName, string userSurname, string userType)
         {
             InitializeComponent();
             connection = new MySqlConnection(connectionString);
@@ -33,6 +34,7 @@ namespace FILAapp
             this.userId = userId;
             loggedInUserName = userName;
             loggedInUserSurname = userSurname;
+            this.userType = userType; 
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
@@ -40,7 +42,7 @@ namespace FILAapp
 
         private void Kompletowanie_Load(object sender, EventArgs e)
         {
-            if (userId == 1 || userId == 2)
+            if (userType == "admin")
             {
                 IsUserAdmin = true;
             }
@@ -48,6 +50,31 @@ namespace FILAapp
             menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
 
             LoadDataToComboBox();
+
+            PrzesunNaSrodek(panel2);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void Kompletowanie_Resize(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel2);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void PrzesunNaSrodek(Control kontrolka)
+        {
+            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
+            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
+
+            kontrolka.Location = new Point(x, y);
+        }
+
+        private void UstawNaDolnymLewymRogu(Control kontrolka)
+        {
+            int x = 12;
+            int y = this.ClientSize.Height - kontrolka.Height;
+
+            kontrolka.Location = new Point(x, y);
         }
 
         private void LoadDataToComboBox()
@@ -191,8 +218,8 @@ namespace FILAapp
                     connection.Open();
                     MySqlTransaction transaction = connection.BeginTransaction();
 
-                    int LastPackageNumber = GetLastPackageNumberFromDatabase();
-                    LastPackageNumber++;
+                    int lastPackageNumber = GetLastPackageNumberFromDatabase();
+                    lastPackageNumber++;
 
                     int tmplastWatermeterId = GetLastWatermeterIdFromDatabase();
 
@@ -205,7 +232,7 @@ namespace FILAapp
                             if (IsRowFull(row))
                             {
                                 string name = row.Cells["nazwa"].Value.ToString();
-                                int serialNumber = Convert.ToInt32(row.Cells["numer_seryjny"].Value);
+                                string serialNumber = row.Cells["numer_seryjny"].Value.ToString(); // Zmiana na string
                                 int employeeId = Convert.ToInt32(row.Cells["idpracownika"].Value);
                                 int productId = Convert.ToInt32(row.Cells["idproduktu"].Value);
                                 string klient = row.Cells["Client"].Value.ToString();
@@ -237,7 +264,7 @@ namespace FILAapp
                                 string insertPackageQuery = "INSERT INTO packages (PackageNumber, IdWatermeter, Client, CreationDate) VALUES (@PackageNumber, @IdWatermeter, @Klient, NOW())";
                                 using (MySqlCommand packageCommand = new MySqlCommand(insertPackageQuery, connection, transaction))
                                 {
-                                    packageCommand.Parameters.AddWithValue("@PackageNumber", LastPackageNumber);
+                                    packageCommand.Parameters.AddWithValue("@PackageNumber", lastPackageNumber);
                                     packageCommand.Parameters.AddWithValue("@IdWatermeter", tmplastWatermeterId);
                                     packageCommand.Parameters.AddWithValue("@Klient", klient);
                                     packageCommand.ExecuteNonQuery();
@@ -261,7 +288,8 @@ namespace FILAapp
             }
         }
 
-        private void RemoveDuplicate(int serialNumber, MySqlConnection connection, MySqlTransaction transaction)
+
+        private void RemoveDuplicate(string serialNumber, MySqlConnection connection, MySqlTransaction transaction)
         {
             string deletePackageQuery = "DELETE FROM packages WHERE IdWatermeter IN (SELECT Id FROM watermeters WHERE SerialNumber = @SerialNumber)";
             using (MySqlCommand deletePackageCommand = new MySqlCommand(deletePackageQuery, connection, transaction))
@@ -279,7 +307,7 @@ namespace FILAapp
         }
 
 
-        private bool CheckForDuplicate(int serialNumber)
+        private bool CheckForDuplicate(string serialNumber)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -445,35 +473,35 @@ namespace FILAapp
 
         private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname);
+            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
             form3.Show();
             this.Hide();
         }
 
         private void Admin_Click(object sender, EventArgs e)
         {
-            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname);
+            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void wysyłkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname);
+            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
         }
 
         private void kompletowanieToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname);
+            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname, userType);
             form2.Show();
             this.Hide();
         }
 
         private void wyszukiwarkaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname);
+            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
             this.Hide();
         }

@@ -116,7 +116,7 @@
             panel1.Controls.Add(label1);
             panel1.Controls.Add(btnLogin);
             panel1.Controls.Add(txtUsername);
-            panel1.Location = new Point(675, 311);
+            panel1.Location = new Point(261, 181);
             panel1.Name = "panel1";
             panel1.Size = new Size(573, 457);
             panel1.TabIndex = 7;
@@ -126,14 +126,15 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveCaption;
-            ClientSize = new Size(1904, 1041);
+            ClientSize = new Size(1424, 861);
             Controls.Add(panel1);
             Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Logowanie";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Logowanie";
-            WindowState = FormWindowState.Maximized;
+            Load += Logowanie_Load;
+            Resize += Logowanie_Resize;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

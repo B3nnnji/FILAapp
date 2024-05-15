@@ -31,7 +31,6 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Admin));
             menuStrip1 = new MenuStrip();
             kompletowanieToolStripMenuItem = new ToolStripMenuItem();
@@ -42,11 +41,6 @@
             btnAdd = new Button();
             btnSave = new Button();
             dataGridView1 = new DataGridView();
-            workerNumber = new DataGridViewTextBoxColumn();
-            name = new DataGridViewTextBoxColumn();
-            surname = new DataGridViewTextBoxColumn();
-            login = new DataGridViewTextBoxColumn();
-            password = new DataGridViewTextBoxColumn();
             label1 = new Label();
             btnSaveName = new Button();
             btnDeleteName = new Button();
@@ -56,9 +50,17 @@
             label2 = new Label();
             btnDel = new Button();
             button1 = new Button();
+            panel1 = new Panel();
+            workerNumber = new DataGridViewTextBoxColumn();
+            name = new DataGridViewTextBoxColumn();
+            surname = new DataGridViewTextBoxColumn();
+            login = new DataGridViewTextBoxColumn();
+            password = new DataGridViewTextBoxColumn();
+            workerType = new DataGridViewTextBoxColumn();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -67,7 +69,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { kompletowanieToolStripMenuItem, wysyłkaToolStripMenuItem, wyszukiwarkaToolStripMenuItem, klienciToolStripMenuItem, Administracja });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1904, 38);
+            menuStrip1.Size = new Size(1264, 38);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -111,9 +113,9 @@
             btnAdd.BackColor = SystemColors.ScrollBar;
             btnAdd.FlatStyle = FlatStyle.Popup;
             btnAdd.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            btnAdd.Location = new Point(200, 773);
+            btnAdd.Location = new Point(295, 571);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(184, 69);
+            btnAdd.Size = new Size(162, 55);
             btnAdd.TabIndex = 1;
             btnAdd.Text = "DODAJ WIERSZ";
             btnAdd.UseVisualStyleBackColor = false;
@@ -124,9 +126,9 @@
             btnSave.BackColor = SystemColors.ScrollBar;
             btnSave.FlatStyle = FlatStyle.Popup;
             btnSave.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            btnSave.Location = new Point(724, 773);
+            btnSave.Location = new Point(565, 571);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(184, 69);
+            btnSave.Size = new Size(162, 57);
             btnSave.TabIndex = 2;
             btnSave.Text = "ZAPISZ PRACOWNIKA";
             btnSave.UseVisualStyleBackColor = false;
@@ -135,70 +137,27 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { workerNumber, name, surname, login, password, workerType });
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { workerNumber, name, surname, login, password });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.Location = new Point(200, 150);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.Location = new Point(26, 46);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(708, 592);
+            dataGridView1.Size = new Size(701, 519);
             dataGridView1.TabIndex = 4;
-            // 
-            // workerNumber
-            // 
-            workerNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            workerNumber.HeaderText = "Numer pracownika";
-            workerNumber.Name = "workerNumber";
-            workerNumber.Width = 188;
-            // 
-            // name
-            // 
-            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            name.HeaderText = "Imię";
-            name.Name = "name";
-            name.Width = 74;
-            // 
-            // surname
-            // 
-            surname.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            surname.HeaderText = "Nazwisko";
-            surname.Name = "surname";
-            surname.Width = 123;
-            // 
-            // login
-            // 
-            login.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            login.HeaderText = "Login";
-            login.Name = "login";
-            login.Width = 86;
-            // 
-            // password
-            // 
-            password.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            password.HeaderText = "Hasło";
-            password.Name = "password";
-            password.Width = 88;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Arial", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(1159, 115);
+            label1.Location = new Point(785, 11);
             label1.Name = "label1";
             label1.Size = new Size(414, 32);
             label1.TabIndex = 5;
@@ -209,9 +168,9 @@
             btnSaveName.BackColor = SystemColors.ScrollBar;
             btnSaveName.FlatStyle = FlatStyle.Popup;
             btnSaveName.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            btnSaveName.Location = new Point(1282, 773);
+            btnSaveName.Location = new Point(1067, 571);
             btnSaveName.Name = "btnSaveName";
-            btnSaveName.Size = new Size(184, 69);
+            btnSaveName.Size = new Size(162, 57);
             btnSaveName.TabIndex = 7;
             btnSaveName.Text = "ZAPISZ";
             btnSaveName.UseVisualStyleBackColor = false;
@@ -233,28 +192,28 @@
             // dataGridView2
             // 
             dataGridView2.AllowUserToAddRows = false;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { number, wmName });
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Arial", 20.25F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.BackColor = SystemColors.Window;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { number, wmName });
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dataGridView2.DefaultCellStyle = dataGridViewCellStyle4;
-            dataGridView2.Location = new Point(1020, 150);
+            dataGridView2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridView2.Location = new Point(759, 46);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowTemplate.Height = 25;
-            dataGridView2.Size = new Size(708, 592);
+            dataGridView2.Size = new Size(470, 519);
             dataGridView2.TabIndex = 9;
             // 
             // number
@@ -262,20 +221,20 @@
             number.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             number.HeaderText = "Numer";
             number.Name = "number";
-            number.Width = 119;
+            number.Width = 70;
             // 
             // wmName
             // 
             wmName.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             wmName.HeaderText = "Nazwa Wodomierza";
             wmName.Name = "wmName";
-            wmName.Width = 281;
+            wmName.Width = 141;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Arial", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(373, 115);
+            label2.Location = new Point(204, 11);
             label2.Name = "label2";
             label2.Size = new Size(307, 32);
             label2.TabIndex = 10;
@@ -286,9 +245,9 @@
             btnDel.BackColor = SystemColors.ScrollBar;
             btnDel.FlatStyle = FlatStyle.Popup;
             btnDel.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDel.Location = new Point(460, 773);
+            btnDel.Location = new Point(26, 570);
             btnDel.Name = "btnDel";
-            btnDel.Size = new Size(184, 69);
+            btnDel.Size = new Size(162, 56);
             btnDel.TabIndex = 11;
             btnDel.Text = "USUŃ PRACOWNIKA";
             btnDel.UseVisualStyleBackColor = false;
@@ -299,30 +258,78 @@
             button1.BackColor = SystemColors.ScrollBar;
             button1.FlatStyle = FlatStyle.Popup;
             button1.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(1020, 773);
+            button1.Location = new Point(759, 571);
             button1.Name = "button1";
-            button1.Size = new Size(184, 69);
+            button1.Size = new Size(162, 57);
             button1.TabIndex = 12;
             button1.Text = "DODAJ WIERSZ";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(btnDel);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(dataGridView2);
+            panel1.Controls.Add(btnSaveName);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(dataGridView1);
+            panel1.Controls.Add(btnSave);
+            panel1.Controls.Add(btnAdd);
+            panel1.Location = new Point(5, 106);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1259, 641);
+            panel1.TabIndex = 13;
+            // 
+            // workerNumber
+            // 
+            workerNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            workerNumber.HeaderText = "Numer pracownika";
+            workerNumber.Name = "workerNumber";
+            workerNumber.Width = 124;
+            // 
+            // name
+            // 
+            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            name.HeaderText = "Imię";
+            name.Name = "name";
+            name.Width = 56;
+            // 
+            // surname
+            // 
+            surname.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            surname.HeaderText = "Nazwisko";
+            surname.Name = "surname";
+            surname.Width = 85;
+            // 
+            // login
+            // 
+            login.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            login.HeaderText = "Login";
+            login.Name = "login";
+            login.Width = 63;
+            // 
+            // password
+            // 
+            password.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            password.HeaderText = "Hasło";
+            password.Name = "password";
+            password.Width = 65;
+            // 
+            // workerType
+            // 
+            workerType.HeaderText = "Typ";
+            workerType.Name = "workerType";
             // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveCaption;
-            ClientSize = new Size(1904, 1041);
-            Controls.Add(button1);
-            Controls.Add(btnDel);
-            Controls.Add(label2);
-            Controls.Add(dataGridView2);
+            ClientSize = new Size(1264, 921);
+            Controls.Add(panel1);
             Controls.Add(btnDeleteName);
-            Controls.Add(btnSaveName);
-            Controls.Add(label1);
-            Controls.Add(dataGridView1);
-            Controls.Add(btnSave);
-            Controls.Add(btnAdd);
             Controls.Add(menuStrip1);
             Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -330,12 +337,14 @@
             Name = "Admin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Administracja";
-            WindowState = FormWindowState.Maximized;
             Load += Admin_Load;
+            Resize += Admin_Resize;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -358,12 +367,14 @@
         private Label label2;
         private Button btnDel;
         private Button button1;
+        private DataGridViewTextBoxColumn number;
+        private DataGridViewTextBoxColumn wmName;
+        private Panel panel1;
         private DataGridViewTextBoxColumn workerNumber;
         private DataGridViewTextBoxColumn name;
         private DataGridViewTextBoxColumn surname;
         private DataGridViewTextBoxColumn login;
         private DataGridViewTextBoxColumn password;
-        private DataGridViewTextBoxColumn number;
-        private DataGridViewTextBoxColumn wmName;
+        private DataGridViewTextBoxColumn workerType;
     }
 }

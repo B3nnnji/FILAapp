@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Tls;
 
 namespace FILAapp
 {
@@ -10,6 +11,7 @@ namespace FILAapp
         private int userId;
         private string userName;
         private string userSurname;
+        private string userType;
 
         public Logowanie()
         {
@@ -24,17 +26,15 @@ namespace FILAapp
 
             if (AuthenticateUser(login, password))
             {
-                GetUserInformation(login, out userId, out userName, out userSurname);
+                GetUserInformation(login, out userId, out userName, out userSurname, out userType);
 
-                Kompletowanie form2 = new Kompletowanie(userId, userName, userSurname);
+                Kompletowanie form2 = new Kompletowanie(userId, userName, userSurname, userType);
                 form2.Show();
                 this.Hide();
-
-                Wyszukiwarka wyszukiwarka = new Wyszukiwarka(userId, userName, userSurname);
             }
             else
             {
-                MessageBox.Show("Nieprawid³owy login lub has³o.");
+                MessageBox.Show("Nieprawidłowy login lub hasło.");
             }
         }
 
@@ -53,7 +53,7 @@ namespace FILAapp
             }
             catch (Exception ex)
             {
-                MessageBox.Show("B³¹d po³¹czenia z baz¹ danych: " + ex.Message);
+                MessageBox.Show("Błąd połączenia z bazą danych: " + ex.Message);
                 return false;
             }
             finally
@@ -62,9 +62,9 @@ namespace FILAapp
             }
         }
 
-        public void GetUserInformation(string login, out int userId, out string userName, out string userSurname)
+        public void GetUserInformation(string login, out int userId, out string userName, out string userSurname, out string userType)
         {
-            string query = "SELECT Id, Name, Surname FROM users WHERE Login=@Login";
+            string query = "SELECT Id, Name, Surname, Type FROM users WHERE Login=@Login";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -79,12 +79,14 @@ namespace FILAapp
                         userId = reader.GetInt32(0);
                         userName = reader.GetString(1);
                         userSurname = reader.GetString(2);
+                        userType = reader.GetString(3);
                     }
                     else
                     {
                         userId = -1;
                         userName = string.Empty;
                         userSurname = string.Empty;
+                        userType = string.Empty;
                     }
                 }
             }
@@ -119,19 +121,35 @@ namespace FILAapp
 
                 if (AuthenticateUser(login, password))
                 {
-                    GetUserInformation(login, out userId, out userName, out userSurname);
+                    GetUserInformation(login, out userId, out userName, out userSurname, out userType);
 
-                    Kompletowanie form2 = new Kompletowanie(userId, userName, userSurname);
+                    Kompletowanie form2 = new Kompletowanie(userId, userName, userSurname, userType);
                     form2.Show();
                     this.Hide();
-
-                    Wyszukiwarka wyszukiwarka = new Wyszukiwarka(userId, userName, userSurname);
                 }
                 else
                 {
-                    MessageBox.Show("Nieprawid³owy login lub has³o.");
+                    MessageBox.Show("Nieprawidłowy login lub hasło.");
                 }
             }
+        }
+
+        private void PrzesunNaSrodek(Control kontrolka)
+        {
+            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
+            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
+
+            kontrolka.Location = new Point(x, y);
+        }
+
+        private void Logowanie_Load(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel1);
+        }
+
+        private void Logowanie_Resize(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel1);
         }
     }
 }
