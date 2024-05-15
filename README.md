@@ -26,28 +26,28 @@ Application Screenshots:
 
 Login
 
-![image](https://github.com/B3nnnji/FILAapp/assets/75662635/d48e820d-f5a3-4afb-be62-9ccb7f51622b) 
-
+![image](https://github.com/B3nnnji/FILAapp/assets/75662635/fe14f842-4d2e-42ee-aabe-275b405714df)
+ 
 Completing new packages and updating existing ones
 
-![image](https://github.com/B3nnnji/FILAapp/assets/75662635/f827023d-1fdb-4c39-81c2-13a23e2b225e) 
+![image](https://github.com/B3nnnji/FILAapp/assets/75662635/b8cf62d0-50e9-4b8e-b977-b768c1ffef22)
 
 The shipment view allows for changing the package owner (e.g., from warehouse to a client's NIP number)
 
-![image](https://github.com/B3nnnji/FILAapp/assets/75662635/be08e4e6-85d7-4d3e-ba49-5933e4da4898) 
+![image](https://github.com/B3nnnji/FILAapp/assets/75662635/a3bb94e5-5082-4dfb-8309-494724724375)
 
-Searching existing packages (using the package number), packages belonging to a specific client (using the NIP number), and individual water meters (by serial number)
+Searching for existing packages (using the package number), packages belonging to a specific client (using the NIP number), and individual water meters (by serial number)
 
-![image](https://github.com/B3nnnji/FILAapp/assets/75662635/e837d759-00bd-43a5-a951-ca2105ef6d96)  
-
+![image](https://github.com/B3nnnji/FILAapp/assets/75662635/55134340-d43d-4289-b968-b1692096ec32)
+ 
 Managing the client database
 
-![image](https://github.com/B3nnnji/FILAapp/assets/75662635/416d1f98-35a7-4e64-8cea-d937f327f11a)  
-
+![image](https://github.com/B3nnnji/FILAapp/assets/75662635/5cd9106e-1d82-4c3b-8976-0527e9828c65)
+  
 Administrative panel allowing for adding users and managing application elements
 
-![image](https://github.com/B3nnnji/FILAapp/assets/75662635/8e8999ed-570e-4e4b-9617-85c7f4d4a02d)  
-
+![image](https://github.com/B3nnnji/FILAapp/assets/75662635/a73c0d51-8a3e-41a1-8182-b80ba76b0255)
+  
 Sticker created during package completion, with a QR code containing the package number
 
 ![image](https://github.com/B3nnnji/FILAapp/assets/75662635/9f2b63cb-c092-4a58-a9a6-890042f8c477)  
