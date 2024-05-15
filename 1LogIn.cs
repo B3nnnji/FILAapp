@@ -122,7 +122,6 @@ namespace FILAapp
                 if (AuthenticateUser(login, password))
                 {
                     GetUserInformation(login, out userId, out userName, out userSurname, out userType);
-
                     Kompletowanie form2 = new Kompletowanie(userId, userName, userSurname, userType);
                     form2.Show();
                     this.Hide();
