@@ -108,7 +108,6 @@ namespace FILAapp
         }
 
         private bool IsUserAdmin = false;
-
         private void Wysyłka_Load(object sender, EventArgs e)
         {
             if (userType == "admin")
