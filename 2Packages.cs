@@ -30,7 +30,6 @@ namespace FILAapp
         {
             InitializeComponent();
             connection = new MySqlConnection(connectionString);
-
             this.userId = userId;
             loggedInUserName = userName;
             loggedInUserSurname = userSurname;
@@ -45,11 +44,8 @@ namespace FILAapp
             {
                 IsUserAdmin = true;
             }
-
             menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
-
             LoadDataToComboBox();
-
             PrzesunNaSrodek(panel2);
             UstawNaDolnymLewymRogu(labelUserInfo);
         }
@@ -64,7 +60,6 @@ namespace FILAapp
         {
             int x = (this.ClientSize.Width - kontrolka.Width) / 2;
             int y = (this.ClientSize.Height - kontrolka.Height) / 2;
-
             kontrolka.Location = new Point(x, y);
         }
 
@@ -72,7 +67,6 @@ namespace FILAapp
         {
             int x = 12;
             int y = this.ClientSize.Height - kontrolka.Height;
-
             kontrolka.Location = new Point(x, y);
         }
 
