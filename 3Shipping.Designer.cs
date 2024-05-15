@@ -190,7 +190,6 @@
             label1.TabIndex = 2;
             label1.Text = "WPISZ NUMER PACZKI \r\nPONIŻEJ";
             label1.TextAlign = ContentAlignment.MiddleCenter;
-            label1.Click += label1_Click;
             // 
             // txtSearch
             // 

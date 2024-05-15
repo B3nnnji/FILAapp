@@ -19,7 +19,6 @@ namespace FILAapp
         private string loggedInUserName;
         private string loggedInUserSurname;
         private string userType;
-        private Kompletowanie mainForm;
 
         public Wysyłka(int userId, string loggedInUserName, string loggedInUserSurname, string userType)
         {
@@ -59,8 +58,8 @@ namespace FILAapp
                     {
                         while (reader.Read())
                         {
-                            string dataNadania = reader["CreationDate"].ToString();
-                            string status = reader["Client"].ToString();
+                            string dataNadania = reader["CreationDate"]?.ToString() ?? string.Empty;
+                            string status = reader["Client"]?.ToString() ?? string.Empty;
                             int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
 
                             packageData.Add(new PackageInfo
@@ -86,7 +85,7 @@ namespace FILAapp
                             {
                                 if (watermeterReader.Read())
                                 {
-                                    string serialNumber = watermeterReader["SerialNumber"].ToString();
+                                    string serialNumber = watermeterReader["SerialNumber"]?.ToString() ?? string.Empty;
                                     dataGridView1.Rows.Add(numer, serialNumber, package.DataNadania, package.Status);
                                 }
                                 else
@@ -103,8 +102,8 @@ namespace FILAapp
 
         class PackageInfo
         {
-            public string DataNadania { get; set; }
-            public string Status { get; set; }
+            public string DataNadania { get; set; } = string.Empty;
+            public string Status { get; set; } = string.Empty;
             public int IdWatermeter { get; set; }
         }
 
@@ -149,7 +148,7 @@ namespace FILAapp
         {
             if (e.ColumnIndex == dataGridView1.Columns["Client"].Index)
             {
-                string klient = dataGridView1.Rows[e.RowIndex].Cells["Client"].Value.ToString();
+                string klient = dataGridView1.Rows[e.RowIndex].Cells["Client"]?.Value.ToString() ?? string.Empty;
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -208,8 +207,8 @@ namespace FILAapp
                 {
                     if (!row.IsNewRow)
                     {
-                        string packageNumber = row.Cells["packageNumber"].Value.ToString();
-                        string nipValue = row.Cells["client"].Value.ToString();
+                        string packageNumber = row.Cells["packageNumber"]?.Value.ToString() ?? string.Empty;
+                        string nipValue = row.Cells["client"]?.Value.ToString() ?? string.Empty;
 
                         string updateQuery = $"UPDATE packages SET Client = '{nipValue}' WHERE PackageNumber = '{packageNumber}'";
                         using (var command = new MySqlCommand(updateQuery, connection))
@@ -257,11 +256,6 @@ namespace FILAapp
             Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
             form3.Show();
             this.Hide();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -127,18 +127,19 @@
             panel2.Controls.Add(btnEnd);
             panel2.Location = new Point(66, 41);
             panel2.Name = "panel2";
-            panel2.Size = new Size(991, 641);
+            panel2.Size = new Size(991, 661);
             panel2.TabIndex = 14;
             // 
             // comboBox1
             // 
-            comboBox1.Font = new Font("Arial", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            comboBox1.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             comboBox1.FormattingEnabled = true;
             comboBox1.Location = new Point(347, 607);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(293, 27);
+            comboBox1.Size = new Size(293, 30);
             comboBox1.TabIndex = 13;
             comboBox1.Text = "Wybierz nazwę wodomierza...";
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // button2
             // 
@@ -151,6 +152,7 @@
             button2.TabIndex = 12;
             button2.Text = "USUŃ OSTATNI WIERSZ";
             button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // btnPrint
             // 
@@ -163,6 +165,7 @@
             btnPrint.TabIndex = 11;
             btnPrint.Text = "DRUKUJ NAKLEJKĘ";
             btnPrint.UseVisualStyleBackColor = false;
+            btnPrint.Click += btnPrint_Click;
             // 
             // btnClear
             // 
@@ -175,6 +178,7 @@
             btnClear.TabIndex = 10;
             btnClear.Text = "WYCZYŚĆ TABELĘ";
             btnClear.UseVisualStyleBackColor = false;
+            btnClear.Click += btnClear_Click_1;
             // 
             // button1
             // 
@@ -187,6 +191,7 @@
             button1.TabIndex = 9;
             button1.Text = "DODAJ NOWY WIERSZ";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // label1
             // 
@@ -226,6 +231,7 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
             dataGridView1.Size = new Size(980, 440);
             dataGridView1.TabIndex = 5;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit_1;
             // 
             // nazwa
             // 
@@ -282,6 +288,7 @@
             btnEnd.TabIndex = 2;
             btnEnd.Text = "ZAPISZ PACZKĘ";
             btnEnd.UseVisualStyleBackColor = false;
+            btnEnd.Click += btnEnd_Click_1;
             // 
             // Kompletowanie
             // 

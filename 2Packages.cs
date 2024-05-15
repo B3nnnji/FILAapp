@@ -34,7 +34,7 @@ namespace FILAapp
             this.userId = userId;
             loggedInUserName = userName;
             loggedInUserSurname = userSurname;
-            this.userType = userType; 
+            this.userType = userType;
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
@@ -93,79 +93,6 @@ namespace FILAapp
 
             connection.Close();
         }
-
-        private void btnEnd_Click(object sender, EventArgs e)
-        {
-            bool isDataGridViewFilled = true;
-
-            if (dataGridView1 != null)
-            {
-                int rowCount = dataGridView1.Rows.Count;
-                for (int i = 0; i < rowCount - 1; i++)
-                {
-                    DataGridViewRow row = dataGridView1.Rows[i];
-                    foreach (DataGridViewCell cell in row.Cells)
-                    {
-                        if (cell.Value == null || string.IsNullOrWhiteSpace(cell.Value.ToString()))
-                        {
-                            isDataGridViewFilled = false;
-                            break;
-                        }
-                    }
-
-                    if (!isDataGridViewFilled)
-                        break;
-                }
-
-
-                if (isDataGridViewFilled)
-                {
-                    DialogResult result = MessageBox.Show("Czy na pewno chcesz przesłać dane do bazy danych?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            InsertDataIntoDatabase(dataGridView1);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Wystąpił błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Anulowano zapis danych.", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Uzupełnij brakujące pola!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Nie znaleziono kontrolki DataGridView!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string selectedValue = comboBox1.SelectedItem.ToString();
-            DateTime currentDate = DateTime.Today;
-
-            for (int row = 0; row < dataGridView1.Rows.Count; row++)
-            {
-                if (dataGridView1.Rows[row].IsNewRow)
-                    break;
-
-                dataGridView1.Rows[row].Cells["nazwa"].Value = selectedValue;
-                dataGridView1.Rows[row].Cells["idproduktu"].Value = row + 1;
-                dataGridView1.Rows[row].Cells["idpracownika"].Value = userId;
-                dataGridView1.Rows[row].Cells["packing_date"].Value = currentDate.ToString("yyyy-MM-dd");
-            }
-        }
-
 
         private int GetLastPackageNumberFromDatabase()
         {
@@ -231,11 +158,11 @@ namespace FILAapp
 
                             if (IsRowFull(row))
                             {
-                                string name = row.Cells["nazwa"].Value.ToString();
-                                string serialNumber = row.Cells["numer_seryjny"].Value.ToString(); // Zmiana na string
+                                string name = row.Cells["nazwa"]?.Value.ToString() ?? string.Empty;
+                                string serialNumber = row.Cells["numer_seryjny"]?.Value.ToString() ?? string.Empty;
                                 int employeeId = Convert.ToInt32(row.Cells["idpracownika"].Value);
                                 int productId = Convert.ToInt32(row.Cells["idproduktu"].Value);
-                                string klient = row.Cells["Client"].Value.ToString();
+                                string klient = row.Cells["Client"]?.Value.ToString() ?? string.Empty;
 
                                 if (CheckForDuplicate(serialNumber))
                                 {
@@ -335,100 +262,11 @@ namespace FILAapp
             return true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Rows.Add();
-        }
-
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Czy na pewno chcesz wyczyścić wszystkie wiersze?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                dataGridView1.Rows.Clear();
-            }
-            else
-            {
-            }
-        }
-
-        private void btnPrint_Click(object sender, EventArgs e)
-        {
-            bool isDataGridViewFilled = true;
-
-            if (dataGridView1 != null)
-            {
-                int rowCount = dataGridView1.Rows.Count;
-                for (int i = 0; i < rowCount - 1; i++)
-                {
-                    DataGridViewRow row = dataGridView1.Rows[i];
-                    foreach (DataGridViewCell cell in row.Cells)
-                    {
-                        if (cell.Value == null || string.IsNullOrWhiteSpace(cell.Value.ToString()))
-                        {
-                            isDataGridViewFilled = false;
-                            break;
-                        }
-                    }
-
-                    if (!isDataGridViewFilled)
-                        break;
-                }
-            }
-
-            if (!isDataGridViewFilled)
-            {
-                MessageBox.Show("Uzupełnij brakujące pola!.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            DialogResult result = MessageBox.Show("Czy na pewno chcesz wydrukować naklejkę?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                string nazwa = dataGridView1.Rows[0].Cells["Nazwa"].Value.ToString();
-
-                int tmpLastPackageNumber = GetLastPackageNumberFromDatabase();
-                tmpLastPackageNumber++;
-
-
-                string combinedData = $"{tmpLastPackageNumber}";
-                BarcodeWriter writer1 = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
-                Bitmap qrCodeBitmap = writer1.Write(combinedData);
-
-                Naklejka form4 = new Naklejka(nazwa, tmpLastPackageNumber, qrCodeBitmap);
-                form4.Show();
-            }
-            else
-            {
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Czy na pewno chcesz usunąć ostatni wiersz?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                if (dataGridView1.Rows.Count > 0)
-                {
-                    if (dataGridView1.Rows[dataGridView1.Rows.Count - 1].IsNewRow)
-                    {
-                        dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                    }
-                }
-            }
-            else
-            {
-            }
-        }
-
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellEndEdit_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["Client"].Index)
             {
-                string klient = dataGridView1.Rows[e.RowIndex].Cells["Client"].Value.ToString();
+                string klient = dataGridView1.Rows[e.RowIndex].Cells["Client"]?.Value.ToString() ?? string.Empty;
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -470,6 +308,166 @@ namespace FILAapp
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Czy na pewno chcesz usunąć ostatni wiersz?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                if (dataGridView1.Rows.Count > 0)
+                {
+                    if (dataGridView1.Rows[dataGridView1.Rows.Count - 1].IsNewRow)
+                    {
+                        dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                    }
+                }
+            }
+            else
+            {
+            }
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            bool isDataGridViewFilled = true;
+
+            if (dataGridView1 != null)
+            {
+                int rowCount = dataGridView1.Rows.Count;
+                for (int i = 0; i < rowCount - 1; i++)
+                {
+                    DataGridViewRow row = dataGridView1.Rows[i];
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        if (cell.Value == null || string.IsNullOrWhiteSpace(cell.Value.ToString()))
+                        {
+                            isDataGridViewFilled = false;
+                            break;
+                        }
+                    }
+
+                    if (!isDataGridViewFilled)
+                        break;
+                }
+            }
+
+            if (!isDataGridViewFilled)
+            {
+                MessageBox.Show("Uzupełnij brakujące pola!.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Czy na pewno chcesz wydrukować naklejkę?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                string nazwa = dataGridView1?.Rows[0]?.Cells["Nazwa"]?.Value.ToString() ?? string.Empty;
+
+                int tmpLastPackageNumber = GetLastPackageNumberFromDatabase();
+                tmpLastPackageNumber++;
+
+
+                string combinedData = $"{tmpLastPackageNumber}";
+                BarcodeWriter writer1 = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
+                Bitmap qrCodeBitmap = writer1.Write(combinedData);
+
+                Naklejka form4 = new Naklejka(nazwa, tmpLastPackageNumber, qrCodeBitmap);
+                form4.Show();
+            }
+            else
+            {
+            }
+        }
+
+        private void btnClear_Click_1(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Czy na pewno chcesz wyczyścić wszystkie wiersze?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                dataGridView1.Rows.Clear();
+            }
+            else
+            {
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Add();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedValue = comboBox1.SelectedItem?.ToString() ?? string.Empty;
+            DateTime currentDate = DateTime.Today;
+
+            for (int row = 0; row < dataGridView1.Rows.Count; row++)
+            {
+                if (dataGridView1.Rows[row].IsNewRow)
+                    break;
+
+                dataGridView1.Rows[row].Cells["nazwa"].Value = selectedValue;
+                dataGridView1.Rows[row].Cells["idproduktu"].Value = row + 1;
+                dataGridView1.Rows[row].Cells["idpracownika"].Value = userId;
+                dataGridView1.Rows[row].Cells["packing_date"].Value = currentDate.ToString("yyyy-MM-dd");
+            }
+        }
+
+        private void btnEnd_Click_1(object sender, EventArgs e)
+        {
+            bool isDataGridViewFilled = true;
+
+            if (dataGridView1 != null)
+            {
+                int rowCount = dataGridView1.Rows.Count;
+                for (int i = 0; i < rowCount - 1; i++)
+                {
+                    DataGridViewRow row = dataGridView1.Rows[i];
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        if (cell.Value == null || string.IsNullOrWhiteSpace(cell.Value.ToString()))
+                        {
+                            isDataGridViewFilled = false;
+                            break;
+                        }
+                    }
+
+                    if (!isDataGridViewFilled)
+                        break;
+                }
+
+
+                if (isDataGridViewFilled)
+                {
+                    DialogResult result = MessageBox.Show("Czy na pewno chcesz przesłać dane do bazy danych?", "Potwierdzenie", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            InsertDataIntoDatabase(dataGridView1);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Wystąpił błąd: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Anulowano zapis danych.", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Uzupełnij brakujące pola!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nie znaleziono kontrolki DataGridView!", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
         {

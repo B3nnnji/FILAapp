@@ -28,8 +28,8 @@ namespace FILAapp
             this.loggedInUserSurname = loggedInUserSurname;
             this.userId = userId;
             this.userType = userType;
+            this.connection = new MySqlConnection(connectionString);
         }
-
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
@@ -123,9 +123,6 @@ namespace FILAapp
             }
         }
 
-
-
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (dataGridView1 != null)
@@ -204,11 +201,11 @@ namespace FILAapp
 
                     if (isNewRow)
                     {
-                        string name = row.Cells["name"].Value.ToString();
-                        string surName = row.Cells["surname"].Value.ToString();
-                        string login = row.Cells["login"].Value.ToString();
-                        string password = row.Cells["password"].Value.ToString();
-                        string workerType = row.Cells["workerType"].Value.ToString();
+                        string name = GetValueOrDefault(row.Cells["name"]);
+                        string surName = GetValueOrDefault(row.Cells["surname"]);
+                        string login = GetValueOrDefault(row.Cells["login"]);
+                        string password = GetValueOrDefault(row.Cells["password"]);
+                        string workerType = GetValueOrDefault(row.Cells["workerType"]);
 
                         if (!IsDataExistInDatabase(connection, name, surName, login, password))
                         {
@@ -228,6 +225,16 @@ namespace FILAapp
             }
         }
 
+        private string GetValueOrDefault(DataGridViewCell cell)
+        {
+            if (cell.Value != null)
+            {
+                return cell?.Value.ToString() ?? string.Empty;
+            }
+            return string.Empty;
+        }
+
+
         private bool IsDataExistInDatabase(MySqlConnection connection, string name, string surName, string login, string password)
         {
             string query = "SELECT COUNT(*) FROM users WHERE Name = @Name AND Surname = @Surname AND Login = @Login AND Password = @Password";
@@ -242,42 +249,6 @@ namespace FILAapp
             }
         }
 
-
-        private void Administracja_Click(object sender, EventArgs e)
-        {
-            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname, userType);
-            form1.Show();
-            this.Hide();
-        }
-
-        private void kompletowanieToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname, userType);
-            form2.Show();
-            this.Hide();
-        }
-
-        private void wysyłkaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
-            form1.Show();
-            this.Hide();
-        }
-
-        private void wyszukiwarkaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
-            form4.Show();
-            this.Hide();
-        }
-
-        private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
-            form3.Show();
-            this.Hide();
-        }
-
         private void btnSaveName_Click(object sender, EventArgs e)
         {
             if (dataGridView2 != null)
@@ -286,7 +257,7 @@ namespace FILAapp
                 {
                     if (!row.IsNewRow)
                     {
-                        string word = row.Cells[1].Value.ToString().Trim();
+                        string word = row.Cells[1].Value?.ToString()?.Trim() ?? "";
 
                         if (!string.IsNullOrWhiteSpace(word))
                         {
@@ -370,7 +341,7 @@ namespace FILAapp
                 {
                     if (!row.IsNewRow)
                     {
-                        string word = row.Cells["wmname"].Value.ToString();
+                        string word = row.Cells["wmname"]?.ToString() ?? string.Empty;
 
                         MySqlConnection connection = new MySqlConnection(connectionString);
                         connection.Open();
@@ -408,11 +379,11 @@ namespace FILAapp
                     {
                         foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                         {
-                            string name = row.Cells["name"].Value.ToString();
-                            string surName = row.Cells["surname"].Value.ToString();
-                            string login = row.Cells["login"].Value.ToString();
-                            string password = row.Cells["password"].Value.ToString();
-                            string workerNumber = row.Cells["workerNumber"].Value.ToString();
+                            string name = row.Cells["name"].Value?.ToString() ?? string.Empty;
+                            string surName = row.Cells["surname"].Value?.ToString() ?? string.Empty;
+                            string login = row.Cells["login"].Value?.ToString() ?? string.Empty;
+                            string password = row.Cells["password"].Value?.ToString() ?? string.Empty;
+                            string workerNumber = row.Cells["workerNumber"].Value?.ToString() ?? string.Empty;
 
                             DeleteDataFromDatabase(name, surName, login, password, workerNumber);
                             dataGridView1.Rows.Remove(row);
@@ -433,6 +404,7 @@ namespace FILAapp
             }
         }
 
+
         private void DeleteDataFromDatabase(string name, string surName, string login, string password, string workerNumber)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -450,6 +422,41 @@ namespace FILAapp
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        private void Administracja_Click(object sender, EventArgs e)
+        {
+            Admin form1 = new Admin(userId, loggedInUserName, loggedInUserSurname, userType);
+            form1.Show();
+            this.Hide();
+        }
+
+        private void kompletowanieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Kompletowanie form2 = new Kompletowanie(userId, loggedInUserName, loggedInUserSurname, userType);
+            form2.Show();
+            this.Hide();
+        }
+
+        private void wysyłkaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
+            form1.Show();
+            this.Hide();
+        }
+
+        private void wyszukiwarkaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
+            form4.Show();
+            this.Hide();
+        }
+
+        private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Klienci form3 = new Klienci(userId, loggedInUserName, loggedInUserSurname, userType);
+            form3.Show();
+            this.Hide();
         }
     }
 }

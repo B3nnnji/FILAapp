@@ -30,62 +30,6 @@ namespace FILAapp
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Rows.Add();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            var selectedRows = dataGridView1.SelectedRows;
-
-            foreach (DataGridViewRow row in selectedRows)
-            {
-                int rowIndex = row.Index;
-
-                dataGridView1.Rows.RemoveAt(rowIndex);
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            ZapiszDoBazyDanych();
-        }
-
-        private void ZapiszDoBazyDanych()
-        {
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                connection.Open();
-
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    string nip = row.Cells["NIP"].Value?.ToString();
-                    string nazwaFirmy = row.Cells["name"].Value?.ToString();
-
-                    string checkExistingQuery = "SELECT COUNT(*) FROM clients WHERE NIP = @nip";
-                    using (var checkCommand = new MySqlCommand(checkExistingQuery, connection))
-                    {
-                        checkCommand.Parameters.AddWithValue("@nip", nip);
-                        int existingCount = Convert.ToInt32(checkCommand.ExecuteScalar());
-
-                        if (existingCount == 0)
-                        {
-                            string insertQuery = "INSERT INTO clients (NIP, Name) VALUES (@nip, @nazwaFirmy)";
-                            using (var insertCommand = new MySqlCommand(insertQuery, connection))
-                            {
-                                insertCommand.Parameters.AddWithValue("@nip", nip);
-                                insertCommand.Parameters.AddWithValue("@nazwaFirmy", string.IsNullOrEmpty(nazwaFirmy) ? DBNull.Value : (object)nazwaFirmy);
-                                insertCommand.ExecuteNonQuery();
-                            }
-                        }
-                    }
-                }
-
-                MessageBox.Show("Dane zapisane do bazy danych.");
-            }
-        }
-
         private bool IsUserAdmin = false;
 
         private void Klienci_Load_1(object sender, EventArgs e)
@@ -124,6 +68,62 @@ namespace FILAapp
             kontrolka.Location = new Point(x, y);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Add();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var selectedRows = dataGridView1.SelectedRows;
+
+            foreach (DataGridViewRow row in selectedRows)
+            {
+                int rowIndex = row.Index;
+
+                dataGridView1.Rows.RemoveAt(rowIndex);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ZapiszDoBazyDanych();
+        }
+
+        private void ZapiszDoBazyDanych()
+        {
+            using (var connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    string nip = row.Cells["NIP"].Value?.ToString() ?? string.Empty;
+                    string nazwaFirmy = row.Cells["name"].Value?.ToString() ?? string.Empty;
+
+                    string checkExistingQuery = "SELECT COUNT(*) FROM clients WHERE NIP = @nip";
+                    using (var checkCommand = new MySqlCommand(checkExistingQuery, connection))
+                    {
+                        checkCommand.Parameters.AddWithValue("@nip", nip);
+                        int existingCount = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                        if (existingCount == 0)
+                        {
+                            string insertQuery = "INSERT INTO clients (NIP, Name) VALUES (@nip, @nazwaFirmy)";
+                            using (var insertCommand = new MySqlCommand(insertQuery, connection))
+                            {
+                                insertCommand.Parameters.AddWithValue("@nip", nip);
+                                insertCommand.Parameters.AddWithValue("@nazwaFirmy", string.IsNullOrEmpty(nazwaFirmy) ? DBNull.Value : (object)nazwaFirmy);
+                                insertCommand.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                MessageBox.Show("Dane zapisane do bazy danych.");
+            }
+        }
+
         private void WyswietlDaneKlientow()
         {
             try
@@ -139,8 +139,8 @@ namespace FILAapp
                         {
                             while (reader.Read())
                             {
-                                string nip = reader["NIP"].ToString();
-                                string name = reader["Name"].ToString();
+                                string nip = reader["NIP"]?.ToString() ?? string.Empty;
+                                string name = reader["Name"]?.ToString() ?? string.Empty;
                                 dataGridView1.Rows.Add(nip, name);
                             }
                         }

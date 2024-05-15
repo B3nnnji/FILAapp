@@ -32,7 +32,42 @@ namespace FILAapp
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
+        private bool IsUserAdmin = false;
 
+        private void Wyszukiwarka_Load_1(object sender, EventArgs e)
+        {
+            if (userType == "admin")
+            {
+                IsUserAdmin = true;
+            }
+
+            menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
+
+            PrzesunNaSrodek(panel2);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void panel2_Resize(object sender, EventArgs e)
+        {
+            PrzesunNaSrodek(panel2);
+            UstawNaDolnymLewymRogu(labelUserInfo);
+        }
+
+        private void PrzesunNaSrodek(Control kontrolka)
+        {
+            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
+            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
+
+            kontrolka.Location = new Point(x, y);
+        }
+
+        private void UstawNaDolnymLewymRogu(Control kontrolka)
+        {
+            int x = 12;
+            int y = this.ClientSize.Height - kontrolka.Height;
+
+            kontrolka.Location = new Point(x, y);
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -45,7 +80,7 @@ namespace FILAapp
                 return;
             }
 
-            string wybranyTyp = checkedListBox1.CheckedItems[0].ToString();
+            string wybranyTyp = checkedListBox1.CheckedItems[0]?.ToString() ?? string.Empty; ;
 
             string[] numeryArray = numery.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                                           .Select(s => s.Trim())
@@ -89,10 +124,10 @@ namespace FILAapp
                     {
                         while (reader.Read())
                         {
-                            string dataNadania = reader["CreationDate"].ToString();
-                            string status = reader["Client"].ToString();
+                            string dataNadania = reader["CreationDate"]?.ToString() ?? string.Empty;
+                            string status = reader["Client"]?.ToString() ?? string.Empty;
                             int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
-                            string clientName = reader["ClientName"].ToString();
+                            string clientName = reader["ClientName"]?.ToString() ?? string.Empty;
 
                             packageData.Add(new PackageInfo
                             {
@@ -119,7 +154,7 @@ namespace FILAapp
                                 {
                                     if (watermeterReader.Read())
                                     {
-                                        string serialNumber = watermeterReader["SerialNumber"].ToString();
+                                        string serialNumber = watermeterReader["SerialNumber"]?.ToString() ?? string.Empty;
                                         dataGridView1.Rows.Add(numer, serialNumber, package.Status, package.ClientName, package.DataNadania);
                                     }
                                     else
@@ -140,11 +175,12 @@ namespace FILAapp
 
         class PackageInfo
         {
-            public string DataNadania { get; set; }
-            public string Status { get; set; }
+            public string DataNadania { get; set; } = string.Empty;
+            public string Status { get; set; } = string.Empty;
             public int IdWatermeter { get; set; }
-            public string ClientName { get; set; }
+            public string ClientName { get; set; } = string.Empty;
         }
+
 
         private void WyszukajWodomierz(string numerSeryjny)
         {
@@ -180,10 +216,10 @@ namespace FILAapp
                     {
                         while (paczkaReader.Read())
                         {
-                            string numerPaczki = paczkaReader["PackageNumber"].ToString();
-                            string dataNadania = paczkaReader["CreationDate"].ToString();
-                            string status = paczkaReader["Client"].ToString();
-                            string companyName = paczkaReader["CompanyName"].ToString();
+                            string numerPaczki = paczkaReader["PackageNumber"]?.ToString() ?? string.Empty;
+                            string dataNadania = paczkaReader["CreationDate"]?.ToString() ?? string.Empty;
+                            string status = paczkaReader["Client"]?.ToString() ?? string.Empty;
+                            string companyName = paczkaReader["CompanyName"]?.ToString() ?? string.Empty;
                             dataGridView1.Rows.Add(numerPaczki, numerSeryjny, status, companyName, dataNadania);
                         }
                     }
@@ -217,11 +253,11 @@ namespace FILAapp
 
                             while (reader.Read())
                             {
-                                string packageNumber = reader["PackageNumber"].ToString();
-                                string dataNadania = reader["CreationDate"].ToString();
-                                string status = reader["Client"].ToString();
+                                string packageNumber = reader["PackageNumber"]?.ToString() ?? string.Empty;
+                                string dataNadania = reader["CreationDate"]?.ToString() ?? string.Empty;
+                                string status = reader["Client"]?.ToString() ?? string.Empty;
                                 int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
-                                string companyName = reader["CompanyName"].ToString();
+                                string companyName = reader["CompanyName"]?.ToString() ?? string.Empty;
 
                                 string serialNumber = PobierzNumerSeryjnyWodomierza(idWatermeter);
 
@@ -252,7 +288,7 @@ namespace FILAapp
                     {
                         if (watermeterReader.Read())
                         {
-                            return watermeterReader["SerialNumber"].ToString();
+                            return watermeterReader["SerialNumber"]?.ToString() ?? string.Empty;
                         }
                         else
                         {
@@ -276,43 +312,6 @@ namespace FILAapp
             Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
             this.Hide();
-        }
-
-        private bool IsUserAdmin = false;
-
-        private void Wyszukiwarka_Load_1(object sender, EventArgs e)
-        {
-            if (userType == "admin")
-            {
-                IsUserAdmin = true;
-            }
-
-            menuStrip1.Items["Admin"].Enabled = IsUserAdmin;
-
-            PrzesunNaSrodek(panel2);
-            UstawNaDolnymLewymRogu(labelUserInfo);
-        }
-
-        private void panel2_Resize(object sender, EventArgs e)
-        {
-            PrzesunNaSrodek(panel2);
-            UstawNaDolnymLewymRogu(labelUserInfo);
-        }
-
-        private void PrzesunNaSrodek(Control kontrolka)
-        {
-            int x = (this.ClientSize.Width - kontrolka.Width) / 2;
-            int y = (this.ClientSize.Height - kontrolka.Height) / 2;
-
-            kontrolka.Location = new Point(x, y);
-        }
-
-        private void UstawNaDolnymLewymRogu(Control kontrolka)
-        {
-            int x = 12;
-            int y = this.ClientSize.Height - kontrolka.Height;
-
-            kontrolka.Location = new Point(x, y);
         }
 
         private void klienciToolStripMenuItem_Click(object sender, EventArgs e)
