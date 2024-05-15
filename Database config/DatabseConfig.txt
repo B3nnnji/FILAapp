@@ -1,4 +1,4 @@
-Wherever you find the following expression: 
+Whenever you find the following expression: 
 
 "Server=10.0.5.3;Database=sql_app;Uid=root;Pwd=root;"
 
