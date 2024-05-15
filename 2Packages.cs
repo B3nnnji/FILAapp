@@ -39,7 +39,6 @@ namespace FILAapp
         }
 
         private bool IsUserAdmin = false;
-
         private void Kompletowanie_Load(object sender, EventArgs e)
         {
             if (userType == "admin")
