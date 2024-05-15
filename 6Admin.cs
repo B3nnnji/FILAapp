@@ -404,7 +404,6 @@ namespace FILAapp
             }
         }
 
-
         private void DeleteDataFromDatabase(string name, string surName, string login, string password, string workerNumber)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
