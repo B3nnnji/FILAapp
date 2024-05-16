@@ -200,8 +200,6 @@ namespace FILAapp
 
                         transaction.Commit();
                         MessageBox.Show("Dane zostały pomyślnie przesłane do bazy danych.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        dataGridView1?.Rows.Clear();
-                        dataGridView1?.Refresh();
                     }
                     catch (Exception ex)
                     {

@@ -331,7 +331,6 @@ namespace FILAapp
         {
             Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
-            this.Hide();
         }
     }
 }

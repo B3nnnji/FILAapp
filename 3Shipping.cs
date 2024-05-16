@@ -32,6 +32,7 @@ namespace FILAapp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
             string numery = txtSearch.Text;
             string[] numeryArray = numery.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                                           .Select(s => s.Trim())
@@ -240,7 +241,6 @@ namespace FILAapp
         {
             Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
-            this.Hide();
         }
 
         private void administracjaToolStripMenuItem_Click(object sender, EventArgs e)
