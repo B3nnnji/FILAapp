@@ -65,13 +65,11 @@ namespace FILAapp
         public void GetUserInformation(string login, out int userId, out string userName, out string userSurname, out string userType)
         {
             string query = "SELECT Id, Name, Surname, Type FROM users WHERE Login=@Login";
-
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.Parameters.AddWithValue("@Login", login);
-
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.Read())
