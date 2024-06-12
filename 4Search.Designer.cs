@@ -50,7 +50,13 @@
             label2 = new Label();
             labelUserInfo = new Label();
             panel1 = new Panel();
+            label5 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            dateTimePicker2 = new DateTimePicker();
+            dateTimePicker1 = new DateTimePicker();
             panel2 = new Panel();
+            mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -62,7 +68,7 @@
             button1.BackColor = SystemColors.ScrollBar;
             button1.FlatStyle = FlatStyle.Popup;
             button1.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(97, 202);
+            button1.Location = new Point(95, 508);
             button1.Name = "button1";
             button1.Size = new Size(125, 44);
             button1.TabIndex = 0;
@@ -146,7 +152,7 @@
             // 
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
             txtSearch.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSearch.Location = new Point(14, 163);
+            txtSearch.Location = new Point(14, 215);
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(291, 33);
             txtSearch.TabIndex = 8;
@@ -158,12 +164,13 @@
             checkedListBox1.CheckOnClick = true;
             checkedListBox1.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "Wyszukaj po numerze paczki", "Wyszukaj po numerze seryjnym", "Wyszukaj po numerze NIP" });
-            checkedListBox1.Location = new Point(14, 68);
+            checkedListBox1.Items.AddRange(new object[] { "Wyszukaj po numerze paczki", "Wyszukaj po numerze seryjnym", "Wyszukaj po numerze NIP", "Wyszukaj po dacie" });
+            checkedListBox1.Location = new Point(14, 97);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(291, 74);
+            checkedListBox1.Size = new Size(291, 98);
             checkedListBox1.TabIndex = 9;
             checkedListBox1.ThreeDCheckBoxes = true;
+            checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
             // 
             // menuStrip1
             // 
@@ -215,11 +222,11 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(3, 10);
+            label2.Location = new Point(32, 15);
             label2.Name = "label2";
-            label2.Size = new Size(318, 44);
+            label2.Size = new Size(257, 66);
             label2.TabIndex = 11;
-            label2.Text = "ZAZNACZ TYLKO JEDNĄ OPCJĘ I\r\nWPISZ WARTOŚĆ PONIŻEJ";
+            label2.Text = "WYBIERZ SPOSÓB \r\nWYSZUKIWANIA I \r\nWPISZ WARTOŚĆ PONIŻEJ";
             label2.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelUserInfo
@@ -234,14 +241,71 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(dateTimePicker2);
+            panel1.Controls.Add(dateTimePicker1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(checkedListBox1);
             panel1.Controls.Add(txtSearch);
             panel1.Controls.Add(button1);
-            panel1.Location = new Point(6, 156);
+            panel1.Location = new Point(6, 36);
             panel1.Name = "panel1";
-            panel1.Size = new Size(336, 249);
+            panel1.Size = new Size(336, 620);
             panel1.TabIndex = 13;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(14, 446);
+            label5.Name = "label5";
+            label5.Size = new Size(28, 16);
+            label5.TabIndex = 16;
+            label5.Text = "Do:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Location = new Point(14, 381);
+            label4.Name = "label4";
+            label4.Size = new Size(29, 16);
+            label4.TabIndex = 15;
+            label4.Text = "Od:";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Location = new Point(14, 282);
+            label3.Name = "label3";
+            label3.Size = new Size(299, 66);
+            label3.TabIndex = 14;
+            label3.Text = "W PRZYPADKU WYSZUKIWANIA\r\nPO DACIE WYBIERZ \r\nODPOWIEDNI ZAKRES";
+            label3.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // dateTimePicker2
+            // 
+            dateTimePicker2.CalendarFont = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dateTimePicker2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dateTimePicker2.Location = new Point(14, 465);
+            dateTimePicker2.Name = "dateTimePicker2";
+            dateTimePicker2.Size = new Size(291, 26);
+            dateTimePicker2.TabIndex = 13;
+            dateTimePicker2.Value = new DateTime(2024, 6, 12, 0, 0, 0, 0);
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.CalendarFont = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dateTimePicker1.CustomFormat = "";
+            dateTimePicker1.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            dateTimePicker1.Location = new Point(14, 400);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(291, 26);
+            dateTimePicker1.TabIndex = 12;
+            dateTimePicker1.Value = new DateTime(2024, 6, 12, 0, 0, 0, 0);
             // 
             // panel2
             // 
@@ -252,6 +316,13 @@
             panel2.Size = new Size(1215, 659);
             panel2.TabIndex = 14;
             panel2.Resize += panel2_Resize;
+            // 
+            // mySqlCommand1
+            // 
+            mySqlCommand1.CacheAge = 0;
+            mySqlCommand1.Connection = null;
+            mySqlCommand1.EnableCaching = false;
+            mySqlCommand1.Transaction = null;
             // 
             // Wyszukiwarka
             // 
@@ -301,5 +372,11 @@
         private DataGridViewTextBoxColumn CreationDate;
         private Panel panel1;
         private Panel panel2;
+        private DateTimePicker dateTimePicker1;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private DateTimePicker dateTimePicker2;
+        private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
     }
 }

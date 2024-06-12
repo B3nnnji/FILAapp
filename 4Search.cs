@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace FILAapp
@@ -28,6 +29,7 @@ namespace FILAapp
             this.loggedInUserName = loggedInUserName;
             this.loggedInUserSurname = loggedInUserSurname;
             this.userType = userType;
+            checkedListBox1.ItemCheck += new ItemCheckEventHandler(checkedListBox1_ItemCheck);
 
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
@@ -71,7 +73,7 @@ namespace FILAapp
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
-            string numery = txtSearch.Text;
+            string numery = txtSearch.Text.Trim();
 
             if (checkedListBox1.CheckedItems.Count == 0)
             {
@@ -79,11 +81,35 @@ namespace FILAapp
                 return;
             }
 
-            string wybranyTyp = checkedListBox1.CheckedItems[0]?.ToString() ?? string.Empty; ;
+            string wybranyTyp = checkedListBox1.CheckedItems[0]?.ToString() ?? string.Empty;
+
+            if (wybranyTyp == "Wyszukaj po dacie")
+            {
+                if (checkedListBox1.CheckedItems.Contains("Wyszukaj po dacie"))
+                {
+                    if (dateTimePicker1.Value > dateTimePicker2.Value)
+                    {
+                        MessageBox.Show("Początkowa data nie może być późniejsza niż końcowa data.");
+                        return;
+                    }
+                    WyszukajPoDacie(dateTimePicker1.Value, dateTimePicker2.Value);
+                }
+                else
+                {
+                    MessageBox.Show("Wybierz zakres dat, aby wyszukać po dacie.");
+                }
+                return;
+            }
 
             string[] numeryArray = numery.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                                           .Select(s => s.Trim())
                                           .ToArray();
+
+            if (numeryArray.Length == 0)
+            {
+                MessageBox.Show("Wprowadź numery do wyszukiwania.");
+                return;
+            }
 
             foreach (string numer in numeryArray)
             {
@@ -105,6 +131,58 @@ namespace FILAapp
             }
         }
 
+        private void WyszukajPoDacie(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT p.PackageNumber, p.CreationDate, p.Client, p.IdWatermeter, c.Name AS CompanyName " +
+                                   "FROM packages p " +
+                                   "INNER JOIN clients c ON p.Client = c.NIP " +
+                                   "WHERE DATE(p.CreationDate) BETWEEN @StartDate AND @EndDate";
+
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        string formattedStartDate = startDate.ToString("yyyy-MM-dd");
+                        string formattedEndDate = endDate.ToString("yyyy-MM-dd");
+
+                        command.Parameters.AddWithValue("@StartDate", formattedStartDate);
+                        command.Parameters.AddWithValue("@EndDate", formattedEndDate);
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (!reader.HasRows)
+                            {
+                                MessageBox.Show("Brak paczek w wybranym zakresie dat.");
+                                return;
+                            }
+
+                            while (reader.Read())
+                            {
+                                string packageNumber = reader["PackageNumber"]?.ToString() ?? string.Empty;
+                                string dataNadania = ((DateTime)reader["CreationDate"]).ToString("yyyy-MM-dd");
+                                string status = reader["Client"]?.ToString() ?? string.Empty;
+                                int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
+                                string companyName = reader["CompanyName"]?.ToString() ?? string.Empty;
+
+                                string serialNumber = PobierzNumerSeryjnyWodomierza(idWatermeter);
+
+                                dataGridView1.Rows.Add(packageNumber, serialNumber, status, companyName, dataNadania);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
+            }
+        }
+
+
         private void WyszukajPaczke(string numer)
         {
             using (var connection = new MySqlConnection(connectionString))
@@ -123,7 +201,7 @@ namespace FILAapp
                     {
                         while (reader.Read())
                         {
-                            string dataNadania = reader["CreationDate"]?.ToString() ?? string.Empty;
+                            string dataNadania = ((DateTime)reader["CreationDate"]).ToString("yyyy-MM-dd");
                             string status = reader["Client"]?.ToString() ?? string.Empty;
                             int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
                             string clientName = reader["ClientName"]?.ToString() ?? string.Empty;
@@ -216,7 +294,7 @@ namespace FILAapp
                         while (paczkaReader.Read())
                         {
                             string numerPaczki = paczkaReader["PackageNumber"]?.ToString() ?? string.Empty;
-                            string dataNadania = paczkaReader["CreationDate"]?.ToString() ?? string.Empty;
+                            string dataNadania = ((DateTime)paczkaReader["CreationDate"]).ToString("yyyy-MM-dd");
                             string status = paczkaReader["Client"]?.ToString() ?? string.Empty;
                             string companyName = paczkaReader["CompanyName"]?.ToString() ?? string.Empty;
                             dataGridView1.Rows.Add(numerPaczki, numerSeryjny, status, companyName, dataNadania);
@@ -253,7 +331,7 @@ namespace FILAapp
                             while (reader.Read())
                             {
                                 string packageNumber = reader["PackageNumber"]?.ToString() ?? string.Empty;
-                                string dataNadania = reader["CreationDate"]?.ToString() ?? string.Empty;
+                                string dataNadania = ((DateTime)reader["CreationDate"]).ToString("yyyy-MM-dd");
                                 string status = reader["Client"]?.ToString() ?? string.Empty;
                                 int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
                                 string companyName = reader["CompanyName"]?.ToString() ?? string.Empty;
@@ -294,6 +372,20 @@ namespace FILAapp
                             MessageBox.Show("Nie znaleziono wodomierza o podanym numerze.");
                             return string.Empty;
                         }
+                    }
+                }
+            }
+        }
+
+        private void checkedListBox1_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (e.NewValue == CheckState.Checked)
+            {
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    if (i != e.Index)
+                    {
+                        checkedListBox1.SetItemChecked(i, false);
                     }
                 }
             }
