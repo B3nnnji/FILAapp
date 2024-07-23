@@ -30,84 +30,6 @@ namespace FILAapp
             labelUserInfo.Text = $"Zalogowano jako: {loggedInUserName} {loggedInUserSurname}";
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Rows.Clear();
-            string numery = txtSearch.Text;
-            string[] numeryArray = numery.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                          .Select(s => s.Trim())
-                                          .ToArray();
-
-            foreach (string numer in numeryArray)
-            {
-                WyszukajPaczke(numer);
-            }
-        }
-
-        private void WyszukajPaczke(string numer)
-        {
-            using (var connection = new MySqlConnection(connectionString))
-            {
-                connection.Open();
-                string query = $"SELECT PackageNumber, CreationDate, Client, IdWatermeter FROM packages WHERE PackageNumber = '{numer}'";
-
-                var packageData = new List<PackageInfo>();
-
-                using (var command = new MySqlCommand(query, connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string dataNadania = reader["CreationDate"]?.ToString() ?? string.Empty;
-                            string status = reader["Client"]?.ToString() ?? string.Empty;
-                            int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
-
-                            packageData.Add(new PackageInfo
-                            {
-                                DataNadania = dataNadania,
-                                Status = status,
-                                IdWatermeter = idWatermeter
-                            });
-                        }
-                    }
-                }
-
-                foreach (var package in packageData)
-                {
-                    using (var innerConnection = new MySqlConnection(connectionString))
-                    {
-                        innerConnection.Open();
-                        string watermeterQuery = $"SELECT SerialNumber FROM watermeters WHERE Id = {package.IdWatermeter}";
-
-                        using (var watermeterCommand = new MySqlCommand(watermeterQuery, innerConnection))
-                        {
-                            using (var watermeterReader = watermeterCommand.ExecuteReader())
-                            {
-                                if (watermeterReader.Read())
-                                {
-                                    string serialNumber = watermeterReader["SerialNumber"]?.ToString() ?? string.Empty;
-                                    dataGridView1.Rows.Add(numer, serialNumber, package.DataNadania, package.Status);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Nie znaleziono wodomierza o podanym numerze.");
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-        class PackageInfo
-        {
-            public string DataNadania { get; set; } = string.Empty;
-            public string Status { get; set; } = string.Empty;
-            public int IdWatermeter { get; set; }
-        }
-
         private bool IsUserAdmin = false;
         private void Wysyłka_Load(object sender, EventArgs e)
         {
@@ -166,7 +88,14 @@ namespace FILAapp
                             {
                                 for (int i = e.RowIndex + 1; i < dataGridView1.Rows.Count; i++)
                                 {
-                                    dataGridView1.Rows[i].Cells["Client"].Value = klient;
+                                    if (!dataGridView1.Rows[i].IsNewRow)
+                                    {
+                                        dataGridView1.Rows[i].Cells["Client"].Value = klient;
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
                                 }
                             }
                             else
@@ -177,7 +106,6 @@ namespace FILAapp
                     }
                     catch (Exception ex)
                     {
-
                         MessageBox.Show($"Wystąpił błąd: {ex.Message}");
                     }
                 }

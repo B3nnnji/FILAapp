@@ -68,7 +68,7 @@
             button1.BackColor = SystemColors.ScrollBar;
             button1.FlatStyle = FlatStyle.Popup;
             button1.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(95, 508);
+            button1.Location = new Point(113, 497);
             button1.Name = "button1";
             button1.Size = new Size(125, 44);
             button1.TabIndex = 0;
@@ -118,43 +118,43 @@
             packageNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             packageNumber.HeaderText = "Numer paczki";
             packageNumber.Name = "packageNumber";
-            packageNumber.Width = 131;
+            packageNumber.Width = 120;
             // 
             // serialNumber
             // 
             serialNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            serialNumber.HeaderText = "Numer seryjny";
+            serialNumber.HeaderText = "Numer fabryczny";
             serialNumber.Name = "serialNumber";
-            serialNumber.Width = 138;
+            serialNumber.Width = 142;
             // 
             // client
             // 
             client.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             client.HeaderText = "Numer NIP";
             client.Name = "client";
-            client.Width = 113;
+            client.Width = 104;
             // 
             // clientName
             // 
             clientName.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             clientName.HeaderText = "Nazwa Klienta";
             clientName.Name = "clientName";
-            clientName.Width = 133;
+            clientName.Width = 122;
             // 
             // CreationDate
             // 
             CreationDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             CreationDate.HeaderText = "Data pakowania";
             CreationDate.Name = "CreationDate";
-            CreationDate.Width = 146;
+            CreationDate.Width = 133;
             // 
             // txtSearch
             // 
             txtSearch.BorderStyle = BorderStyle.FixedSingle;
             txtSearch.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            txtSearch.Location = new Point(14, 215);
+            txtSearch.Location = new Point(14, 228);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(291, 33);
+            txtSearch.Size = new Size(308, 33);
             txtSearch.TabIndex = 8;
             // 
             // checkedListBox1
@@ -162,12 +162,12 @@
             checkedListBox1.BackColor = SystemColors.Window;
             checkedListBox1.BorderStyle = BorderStyle.FixedSingle;
             checkedListBox1.CheckOnClick = true;
-            checkedListBox1.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            checkedListBox1.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "Wyszukaj po numerze paczki", "Wyszukaj po numerze seryjnym", "Wyszukaj po numerze NIP", "Wyszukaj po dacie" });
+            checkedListBox1.Items.AddRange(new object[] { "Wyszukaj po numerze paczki", "Wyszukaj po numerze fabrycznym", "Wyszukaj po numerze NIP", "Wyszukaj po numerze NIP w zakresie dat", "Wyszukaj po dacie" });
             checkedListBox1.Location = new Point(14, 97);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(291, 98);
+            checkedListBox1.Size = new Size(308, 107);
             checkedListBox1.TabIndex = 9;
             checkedListBox1.ThreeDCheckBoxes = true;
             checkedListBox1.ItemCheck += checkedListBox1_ItemCheck;
@@ -222,7 +222,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(32, 15);
+            label2.Location = new Point(48, 16);
             label2.Name = "label2";
             label2.Size = new Size(257, 66);
             label2.TabIndex = 11;
@@ -279,7 +279,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(14, 282);
+            label3.Location = new Point(23, 281);
             label3.Name = "label3";
             label3.Size = new Size(299, 66);
             label3.TabIndex = 14;
@@ -292,7 +292,7 @@
             dateTimePicker2.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             dateTimePicker2.Location = new Point(14, 465);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(291, 26);
+            dateTimePicker2.Size = new Size(308, 26);
             dateTimePicker2.TabIndex = 13;
             dateTimePicker2.Value = new DateTime(2024, 6, 12, 0, 0, 0, 0);
             // 
@@ -303,7 +303,7 @@
             dateTimePicker1.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
             dateTimePicker1.Location = new Point(14, 400);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(291, 26);
+            dateTimePicker1.Size = new Size(308, 26);
             dateTimePicker1.TabIndex = 12;
             dateTimePicker1.Value = new DateTime(2024, 6, 12, 0, 0, 0, 0);
             // 
@@ -365,11 +365,6 @@
         private ToolStripMenuItem Admin;
         private Label label2;
         private Label labelUserInfo;
-        private DataGridViewTextBoxColumn packageNumber;
-        private DataGridViewTextBoxColumn serialNumber;
-        private DataGridViewTextBoxColumn client;
-        private DataGridViewTextBoxColumn clientName;
-        private DataGridViewTextBoxColumn CreationDate;
         private Panel panel1;
         private Panel panel2;
         private DateTimePicker dateTimePicker1;
@@ -378,5 +373,10 @@
         private Label label3;
         private DateTimePicker dateTimePicker2;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
+        private DataGridViewTextBoxColumn packageNumber;
+        private DataGridViewTextBoxColumn serialNumber;
+        private DataGridViewTextBoxColumn client;
+        private DataGridViewTextBoxColumn clientName;
+        private DataGridViewTextBoxColumn CreationDate;
     }
 }

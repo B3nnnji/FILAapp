@@ -70,10 +70,27 @@ namespace FILAapp
             kontrolka.Location = new Point(x, y);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public class PackageInfo
+        {
+            public string PackageNumber { get; set; } 
+            public string DataNadania { get; set; }
+            public string Status { get; set; }
+            public int IdWatermeter { get; set; }
+            public string ClientName { get; set; }
+        }
+
+    private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             string numery = txtSearch.Text.Trim();
+            DateTime? startDate = null;
+            DateTime? endDate = null;
+
+            if (dateTimePicker1.Value <= dateTimePicker2.Value)
+            {
+                startDate = dateTimePicker1.Value;
+                endDate = dateTimePicker2.Value;
+            }
 
             if (checkedListBox1.CheckedItems.Count == 0)
             {
@@ -83,21 +100,9 @@ namespace FILAapp
 
             string wybranyTyp = checkedListBox1.CheckedItems[0]?.ToString() ?? string.Empty;
 
-            if (wybranyTyp == "Wyszukaj po dacie")
+            if (string.IsNullOrEmpty(numery) && wybranyTyp != "Wyszukaj po dacie")
             {
-                if (checkedListBox1.CheckedItems.Contains("Wyszukaj po dacie"))
-                {
-                    if (dateTimePicker1.Value > dateTimePicker2.Value)
-                    {
-                        MessageBox.Show("Początkowa data nie może być późniejsza niż końcowa data.");
-                        return;
-                    }
-                    WyszukajPoDacie(dateTimePicker1.Value, dateTimePicker2.Value);
-                }
-                else
-                {
-                    MessageBox.Show("Wybierz zakres dat, aby wyszukać po dacie.");
-                }
+                MessageBox.Show("Wprowadź numery do wyszukiwania.");
                 return;
             }
 
@@ -105,31 +110,48 @@ namespace FILAapp
                                           .Select(s => s.Trim())
                                           .ToArray();
 
-            if (numeryArray.Length == 0)
+            switch (wybranyTyp)
             {
-                MessageBox.Show("Wprowadź numery do wyszukiwania.");
-                return;
-            }
-
-            foreach (string numer in numeryArray)
-            {
-                switch (wybranyTyp)
-                {
-                    case "Wyszukaj po numerze paczki":
+                case "Wyszukaj po dacie":
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        WyszukajPoDacie(startDate.Value, endDate.Value);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Podaj zakres dat.");
+                    }
+                    break;
+                case "Wyszukaj po numerze paczki":
+                    foreach (string numer in numeryArray)
+                    {
                         WyszukajPaczke(numer);
-                        break;
-                    case "Wyszukaj po numerze seryjnym":
-                        WyszukajWodomierz(numer);
-                        break;
-                    case "Wyszukaj po numerze NIP":
+                    }
+                    break;
+                case "Wyszukaj po numerze NIP":
+                    foreach (string numer in numeryArray)
+                    {
                         WyszukajPoNIP(numer);
-                        break;
-                    default:
-                        MessageBox.Show("Nieznany typ wyszukiwania!");
-                        break;
-                }
+                    }
+                    break;
+                case "Wyszukaj po numerze seryjnym wodomierza":
+                    foreach (string numer in numeryArray)
+                    {
+                        WyszukajWodomierz(numer);
+                    }
+                    break;
+                case "Wyszukaj po numerze NIP w zakresie dat":
+                    foreach (string numer in numeryArray)
+                    {
+                        WyszukajPoNIP(numer, startDate, endDate);
+                    }
+                    break;
+                default:
+                    MessageBox.Show("Nieznany typ wyszukiwania!");
+                    break;
             }
         }
+
 
         private void WyszukajPoDacie(DateTime startDate, DateTime endDate)
         {
@@ -146,11 +168,8 @@ namespace FILAapp
 
                     using (var command = new MySqlCommand(query, connection))
                     {
-                        string formattedStartDate = startDate.ToString("yyyy-MM-dd");
-                        string formattedEndDate = endDate.ToString("yyyy-MM-dd");
-
-                        command.Parameters.AddWithValue("@StartDate", formattedStartDate);
-                        command.Parameters.AddWithValue("@EndDate", formattedEndDate);
+                        command.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd"));
 
                         using (var reader = command.ExecuteReader())
                         {
@@ -182,8 +201,7 @@ namespace FILAapp
             }
         }
 
-
-        private void WyszukajPaczke(string numer)
+        private void WyszukajPaczke(string numer, DateTime? startDate = null, DateTime? endDate = null)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
@@ -191,12 +209,24 @@ namespace FILAapp
                 string query = $"SELECT p.PackageNumber, p.CreationDate, p.Client, p.IdWatermeter, c.Name AS ClientName " +
                                $"FROM packages p " +
                                $"INNER JOIN clients c ON p.Client = c.NIP " +
-                               $"WHERE p.PackageNumber = '{numer}'";
+                               $"WHERE p.PackageNumber = @numer";
+
+                if (startDate.HasValue && endDate.HasValue)
+                {
+                    query += " AND DATE(p.CreationDate) BETWEEN @StartDate AND @EndDate";
+                }
 
                 var packageData = new List<PackageInfo>();
 
                 using (var command = new MySqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@numer", numer);
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        command.Parameters.AddWithValue("@StartDate", startDate.Value.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@EndDate", endDate.Value.ToString("yyyy-MM-dd"));
+                    }
+
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -245,19 +275,66 @@ namespace FILAapp
                 }
                 else
                 {
-                    MessageBox.Show("Nie znaleziono paczki o podanym numerze");
+                    MessageBox.Show("Nie znaleziono paczki o podanym numerze w podanym zakresie dat.");
                 }
             }
         }
 
-        class PackageInfo
+        private void WyszukajPoNIP(string nip, DateTime? startDate = null, DateTime? endDate = null)
         {
-            public string DataNadania { get; set; } = string.Empty;
-            public string Status { get; set; } = string.Empty;
-            public int IdWatermeter { get; set; }
-            public string ClientName { get; set; } = string.Empty;
-        }
+            try
+            {
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT p.PackageNumber, p.CreationDate, p.Client, p.IdWatermeter, c.Name AS CompanyName " +
+                                   "FROM packages p " +
+                                   "INNER JOIN clients c ON p.Client = c.NIP " +
+                                   "WHERE p.Client = @nip";
 
+                    if (startDate.HasValue && endDate.HasValue)
+                    {
+                        query += " AND DATE(p.CreationDate) BETWEEN @StartDate AND @EndDate";
+                    }
+
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@nip", nip);
+                        if (startDate.HasValue && endDate.HasValue)
+                        {
+                            command.Parameters.AddWithValue("@StartDate", startDate.Value.ToString("yyyy-MM-dd"));
+                            command.Parameters.AddWithValue("@EndDate", endDate.Value.ToString("yyyy-MM-dd"));
+                        }
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (!reader.HasRows)
+                            {
+                                MessageBox.Show("Brak paczek dla podanego klienta w podanym zakresie dat.");
+                                return;
+                            }
+
+                            while (reader.Read())
+                            {
+                                string packageNumber = reader["PackageNumber"]?.ToString() ?? string.Empty;
+                                string dataNadania = ((DateTime)reader["CreationDate"]).ToString("yyyy-MM-dd");
+                                string status = reader["Client"]?.ToString() ?? string.Empty;
+                                int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
+                                string companyName = reader["CompanyName"]?.ToString() ?? string.Empty;
+
+                                string serialNumber = PobierzNumerSeryjnyWodomierza(idWatermeter);
+
+                                dataGridView1.Rows.Add(packageNumber, serialNumber, status, companyName, dataNadania);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
+            }
+        }
 
         private void WyszukajWodomierz(string numerSeryjny)
         {
@@ -304,51 +381,6 @@ namespace FILAapp
             }
         }
 
-        private void WyszukajPoNIP(string nip)
-        {
-            try
-            {
-                using (var connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT p.PackageNumber, p.CreationDate, p.Client, p.IdWatermeter, c.Name AS CompanyName " +
-                                   "FROM packages p " +
-                                   "INNER JOIN clients c ON p.Client = c.NIP " +
-                                   "WHERE p.Client = @nip";
-
-                    using (var command = new MySqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@nip", nip);
-
-                        using (var reader = command.ExecuteReader())
-                        {
-                            if (!reader.HasRows)
-                            {
-                                MessageBox.Show("Brak paczek dla podanego klienta.");
-                                return;
-                            }
-
-                            while (reader.Read())
-                            {
-                                string packageNumber = reader["PackageNumber"]?.ToString() ?? string.Empty;
-                                string dataNadania = ((DateTime)reader["CreationDate"]).ToString("yyyy-MM-dd");
-                                string status = reader["Client"]?.ToString() ?? string.Empty;
-                                int idWatermeter = Convert.ToInt32(reader["IdWatermeter"]);
-                                string companyName = reader["CompanyName"]?.ToString() ?? string.Empty;
-
-                                string serialNumber = PobierzNumerSeryjnyWodomierza(idWatermeter);
-
-                                dataGridView1.Rows.Add(packageNumber, serialNumber, status, companyName, dataNadania);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
-        }
 
         private string PobierzNumerSeryjnyWodomierza(int idWatermeter)
         {
