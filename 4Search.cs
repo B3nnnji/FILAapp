@@ -134,7 +134,7 @@ namespace FILAapp
                         WyszukajPoNIP(numer);
                     }
                     break;
-                case "Wyszukaj po numerze seryjnym wodomierza":
+                case "Wyszukaj po numerze fabrycznym":
                     foreach (string numer in numeryArray)
                     {
                         WyszukajWodomierz(numer);
@@ -310,7 +310,7 @@ namespace FILAapp
                         {
                             if (!reader.HasRows)
                             {
-                                MessageBox.Show("Brak paczek dla podanego klienta w podanym zakresie dat.");
+                                MessageBox.Show("Brak paczek dla podanego klienta.");
                                 return;
                             }
 

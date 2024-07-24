@@ -26,6 +26,7 @@ namespace FILAapp
         private string loggedInUserSurname;
         private int userId;
         private string userType;
+        private bool isDataInsertionSuccessful = false;
         public Kompletowanie(int userId, string userName, string userSurname, string userType)
         {
             InitializeComponent();
@@ -163,6 +164,7 @@ namespace FILAapp
                                     if (result == DialogResult.No)
                                     {
                                         transaction.Rollback();
+                                        isDataInsertionSuccessful = false;
                                         return;
                                     }
                                     else
@@ -193,11 +195,13 @@ namespace FILAapp
                         }
 
                         transaction.Commit();
+                        isDataInsertionSuccessful = true;
                         MessageBox.Show("Dane zostały pomyślnie przesłane do bazy danych.", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
+                        isDataInsertionSuccessful = false;
                         MessageBox.Show($"Wystąpił błąd podczas przesyłania danych do bazy danych: {ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -322,6 +326,12 @@ namespace FILAapp
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
+            if (!isDataInsertionSuccessful)
+            {
+                MessageBox.Show("Dane nie zostały zapisane do bazy danych. Najpierw zapisz dane.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             bool isDataGridViewFilled = true;
 
             if (dataGridView1 != null)
@@ -359,16 +369,12 @@ namespace FILAapp
                 int tmpLastPackageNumber = GetLastPackageNumberFromDatabase();
                 tmpLastPackageNumber++;
 
-
                 string combinedData = $"{tmpLastPackageNumber}";
                 BarcodeWriter writer1 = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
                 Bitmap qrCodeBitmap = writer1.Write(combinedData);
 
                 Naklejka form4 = new Naklejka(nazwa, tmpLastPackageNumber, qrCodeBitmap);
                 form4.Show();
-            }
-            else
-            {
             }
         }
 

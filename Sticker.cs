@@ -22,7 +22,7 @@ namespace FILAapp
         {
             InitializeComponent();
             _qrCodeBitmap = qrCodeBitmap;
-            packageNumber = tmpLastPackageNumber;
+            packageNumber = tmpLastPackageNumber - 1;
             this.nazwa = nazwa;
         }
 
