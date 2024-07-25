@@ -369,7 +369,7 @@ namespace FILAapp
                 int tmpLastPackageNumber = GetLastPackageNumberFromDatabase();
                 tmpLastPackageNumber++;
 
-                string combinedData = $"{tmpLastPackageNumber}";
+                string combinedData = $"{tmpLastPackageNumber - 1}";
                 BarcodeWriter writer1 = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
                 Bitmap qrCodeBitmap = writer1.Write(combinedData);
 

@@ -134,9 +134,9 @@
             // 
             comboBox1.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(347, 607);
+            comboBox1.Location = new Point(283, 607);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(293, 30);
+            comboBox1.Size = new Size(408, 30);
             comboBox1.TabIndex = 13;
             comboBox1.Text = "Wybierz nazwę wodomierza...";
             comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
