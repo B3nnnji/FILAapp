@@ -59,7 +59,7 @@ namespace FILAapp
             lbWatermeterName.Text = nazwa;
             lbPackingWorker.Text = userName + " " + userSurname;
             PrintDialog printDialog = new PrintDialog();
-            printDocument1.PrinterSettings.PrinterName = "Microsoft Print to PDF";
+            printDocument1.PrinterSettings.PrinterName = "Polonia";
             printDialog.Document = printDocument1;
             printDialog.UseEXDialog = true;
 
