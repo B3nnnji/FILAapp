@@ -17,13 +17,16 @@ namespace FILAapp
         private Bitmap _qrCodeBitmap;
         private int packageNumber;
         private string nazwa;
-
-        public Naklejka(string nazwa, int tmpLastPackageNumber, Bitmap qrCodeBitmap)
+        private string userName;
+        private string userSurname;
+        public Naklejka(string stickerLoggedInUserName, string stickerLoggedInUserSurname, string nazwa, int tmpLastPackageNumber, Bitmap qrCodeBitmap)
         {
             InitializeComponent();
             _qrCodeBitmap = qrCodeBitmap;
             packageNumber = tmpLastPackageNumber - 1;
             this.nazwa = nazwa;
+            userName = stickerLoggedInUserName;
+            userSurname = stickerLoggedInUserSurname;
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -35,7 +38,7 @@ namespace FILAapp
             float margin = 20;
             float page_w = e.PageBounds.Width - (2 * margin);
             float page_h = e.PageBounds.Height - (2 * margin);
-            
+
             if (image.Width >= image.Height)
             {
                 quotient = page_w / image.Width;
@@ -51,12 +54,12 @@ namespace FILAapp
 
         private void Form3_Shown(object sender, EventArgs e)
         {
-            pictureBox3.Image = _qrCodeBitmap;
-            label3.Text = $"Numer paczki: {packageNumber}".ToString();
-            label4.Text = DateTime.Now.ToString("dd-MM-yyyy");
-            label1.Text = nazwa;
+            pbQRCode.Image = _qrCodeBitmap;
+            lbDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
+            lbWatermeterName.Text = nazwa;
+            lbPackingWorker.Text = userName + " " + userSurname;
             PrintDialog printDialog = new PrintDialog();
-            printDocument1.PrinterSettings.PrinterName = "Polonia";
+            printDocument1.PrinterSettings.PrinterName = "Microsoft Print to PDF";
             printDialog.Document = printDocument1;
             printDialog.UseEXDialog = true;
 
@@ -64,12 +67,7 @@ namespace FILAapp
             this.Close();
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

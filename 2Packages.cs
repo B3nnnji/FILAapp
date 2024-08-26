@@ -373,7 +373,10 @@ namespace FILAapp
                 BarcodeWriter writer1 = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
                 Bitmap qrCodeBitmap = writer1.Write(combinedData);
 
-                Naklejka form4 = new Naklejka(nazwa, tmpLastPackageNumber, qrCodeBitmap);
+                string stickerLoggedInUserName = loggedInUserName;
+                string stickerLoggedInUserSurname = loggedInUserSurname;
+
+                Naklejka form4 = new Naklejka(stickerLoggedInUserName, stickerLoggedInUserSurname, nazwa, tmpLastPackageNumber, qrCodeBitmap);
                 form4.Show();
             }
         }

@@ -30,70 +30,117 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Naklejka));
             panel1 = new Panel();
-            label4 = new Label();
-            label1 = new Label();
-            label3 = new Label();
-            pictureBox3 = new PictureBox();
+            textBox1 = new TextBox();
+            label6 = new Label();
+            label5 = new Label();
+            lbPackingWorker = new Label();
+            label2 = new Label();
+            lbDate = new Label();
+            lbWatermeterName = new Label();
+            pbQRCode = new PictureBox();
             pictureBox1 = new PictureBox();
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbQRCode).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(pictureBox3);
+            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(lbPackingWorker);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(lbDate);
+            panel1.Controls.Add(lbWatermeterName);
+            panel1.Controls.Add(pbQRCode);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(432, 208);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
             // 
-            // label4
+            // textBox1
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(12, 96);
-            label4.Name = "label4";
-            label4.Size = new Size(65, 24);
-            label4.TabIndex = 7;
-            label4.Text = "label4";
+            textBox1.BackColor = Color.Black;
+            textBox1.BorderStyle = BorderStyle.None;
+            textBox1.Font = new Font("Segoe UI", 1.5F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Location = new Point(296, 170);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(124, 3);
+            textBox1.TabIndex = 12;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
-            // label1
+            // label6
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(12, 148);
-            label1.Name = "label1";
-            label1.Size = new Size(41, 16);
-            label1.TabIndex = 6;
-            label1.Text = "label1";
+            label6.AutoSize = true;
+            label6.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label6.Location = new Point(332, 183);
+            label6.Name = "label6";
+            label6.Size = new Size(58, 18);
+            label6.TabIndex = 11;
+            label6.Text = "Podpis";
             // 
-            // label3
+            // label5
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(127, 22);
-            label3.Name = "label3";
-            label3.Size = new Size(65, 22);
-            label3.TabIndex = 5;
-            label3.Text = "label3";
-            label3.Click += label3_Click;
+            label5.AutoSize = true;
+            label5.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(296, 120);
+            label5.Name = "label5";
+            label5.Size = new Size(124, 22);
+            label5.TabIndex = 10;
+            label5.Text = "Sprawdził/a:";
             // 
-            // pictureBox3
+            // lbPackingWorker
             // 
-            pictureBox3.Location = new Point(281, 67);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(139, 129);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 3;
-            pictureBox3.TabStop = false;
+            lbPackingWorker.AutoSize = true;
+            lbPackingWorker.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lbPackingWorker.Location = new Point(12, 159);
+            lbPackingWorker.Name = "lbPackingWorker";
+            lbPackingWorker.Size = new Size(50, 18);
+            lbPackingWorker.TabIndex = 9;
+            lbPackingWorker.Text = "label3";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Location = new Point(12, 120);
+            label2.Name = "label2";
+            label2.Size = new Size(111, 22);
+            label2.TabIndex = 8;
+            label2.Text = "Pakował/a:";
+            // 
+            // lbDate
+            // 
+            lbDate.AutoSize = true;
+            lbDate.Font = new Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            lbDate.Location = new Point(156, 12);
+            lbDate.Name = "lbDate";
+            lbDate.Size = new Size(65, 24);
+            lbDate.TabIndex = 7;
+            lbDate.Text = "label4";
+            // 
+            // lbWatermeterName
+            // 
+            lbWatermeterName.AutoSize = true;
+            lbWatermeterName.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            lbWatermeterName.Location = new Point(12, 89);
+            lbWatermeterName.Name = "lbWatermeterName";
+            lbWatermeterName.Size = new Size(41, 16);
+            lbWatermeterName.TabIndex = 6;
+            lbWatermeterName.Text = "label1";
+            // 
+            // pbQRCode
+            // 
+            pbQRCode.Location = new Point(342, 3);
+            pbQRCode.Name = "pbQRCode";
+            pbQRCode.Size = new Size(87, 76);
+            pbQRCode.SizeMode = PictureBoxSizeMode.Zoom;
+            pbQRCode.TabIndex = 3;
+            pbQRCode.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -121,7 +168,7 @@
             Shown += Form3_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbQRCode).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
@@ -131,9 +178,13 @@
         private Panel panel1;
         private PictureBox pictureBox1;
         private System.Drawing.Printing.PrintDocument printDocument1;
-        private PictureBox pictureBox3;
-        private Label label3;
-        private Label label4;
-        private Label label1;
+        private PictureBox pbQRCode;
+        private Label lbDate;
+        private Label lbWatermeterName;
+        private Label label6;
+        private Label label5;
+        private Label lbPackingWorker;
+        private Label label2;
+        private TextBox textBox1;
     }
 }
