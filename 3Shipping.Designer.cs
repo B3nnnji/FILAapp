@@ -193,6 +193,7 @@
             Name = "Wysyłka";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Wysyłka";
+            FormClosed += Wysyłka_FormClosed;
             Load += Wysyłka_Load;
             Resize += Wysyłka_Resize;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

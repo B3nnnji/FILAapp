@@ -223,6 +223,7 @@
             Name = "Klienci";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Klienci";
+            FormClosed += Klienci_FormClosed;
             Load += Klienci_Load_1;
             Resize += Klienci_Resize;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

@@ -373,10 +373,9 @@ namespace FILAapp
                 BarcodeWriter writer1 = new BarcodeWriter { Format = BarcodeFormat.QR_CODE };
                 Bitmap qrCodeBitmap = writer1.Write(combinedData);
 
-                string stickerLoggedInUserName = loggedInUserName;
-                string stickerLoggedInUserSurname = loggedInUserSurname;
+                int stickerLoggedInUser = userId;
 
-                Naklejka form4 = new Naklejka(stickerLoggedInUserName, stickerLoggedInUserSurname, nazwa, tmpLastPackageNumber, qrCodeBitmap);
+                Naklejka form4 = new Naklejka(stickerLoggedInUser, nazwa, tmpLastPackageNumber, qrCodeBitmap);
                 form4.Show();
             }
         }
@@ -503,6 +502,11 @@ namespace FILAapp
             Wyszukiwarka form4 = new Wyszukiwarka(userId, loggedInUserName, loggedInUserSurname, userType);
             form4.Show();
             this.Hide();
+        }
+
+        private void Kompletowanie_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

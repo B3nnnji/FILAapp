@@ -148,5 +148,10 @@ namespace FILAapp
         {
             PrzesunNaSrodek(panel1);
         }
+
+        private void Logowanie_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

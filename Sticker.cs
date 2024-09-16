@@ -17,16 +17,14 @@ namespace FILAapp
         private Bitmap _qrCodeBitmap;
         private int packageNumber;
         private string nazwa;
-        private string userName;
-        private string userSurname;
-        public Naklejka(string stickerLoggedInUserName, string stickerLoggedInUserSurname, string nazwa, int tmpLastPackageNumber, Bitmap qrCodeBitmap)
+        private int userId;
+        public Naklejka(int stickerLoggedInUser, string nazwa, int tmpLastPackageNumber, Bitmap qrCodeBitmap)
         {
             InitializeComponent();
             _qrCodeBitmap = qrCodeBitmap;
             packageNumber = tmpLastPackageNumber - 1;
             this.nazwa = nazwa;
-            userName = stickerLoggedInUserName;
-            userSurname = stickerLoggedInUserSurname;
+            userId = stickerLoggedInUser;
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -56,8 +54,8 @@ namespace FILAapp
         {
             pbQRCode.Image = _qrCodeBitmap;
             lbDate.Text = DateTime.Now.ToString("dd-MM-yyyy");
-            lbWatermeterName.Text = nazwa;
-            lbPackingWorker.Text = userName + " " + userSurname;
+            lbPackageNumber.Text = $"{packageNumber}";
+            lbPackingWorker.Text = $"ID Pracownika: {userId}";
             PrintDialog printDialog = new PrintDialog();
             printDocument1.PrinterSettings.PrinterName = "Polonia";
             printDialog.Document = printDocument1;
@@ -70,6 +68,11 @@ namespace FILAapp
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Naklejka_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

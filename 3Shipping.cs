@@ -184,5 +184,10 @@ namespace FILAapp
             form3.Show();
             this.Hide();
         }
+
+        private void Wysyłka_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

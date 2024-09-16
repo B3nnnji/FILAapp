@@ -133,6 +133,7 @@
             Name = "Logowanie";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Logowanie";
+            FormClosed += Logowanie_FormClosed;
             Load += Logowanie_Load;
             Resize += Logowanie_Resize;
             panel1.ResumeLayout(false);

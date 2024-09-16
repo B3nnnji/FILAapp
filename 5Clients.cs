@@ -84,7 +84,7 @@ namespace FILAapp
                     {
                         string nip = row.Cells["NIP"].Value?.ToString() ?? string.Empty;
                         UsunZBazyDanych(nip);
-                        
+
                         dataGridView1.Rows.Remove(row);
                     }
                 }
@@ -209,6 +209,11 @@ namespace FILAapp
             Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
             this.Hide();
+        }
+
+        private void Klienci_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

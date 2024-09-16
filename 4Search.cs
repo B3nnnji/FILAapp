@@ -72,14 +72,14 @@ namespace FILAapp
 
         public class PackageInfo
         {
-            public string PackageNumber { get; set; } 
+            public string PackageNumber { get; set; }
             public string DataNadania { get; set; }
             public string Status { get; set; }
             public int IdWatermeter { get; set; }
             public string ClientName { get; set; }
         }
 
-    private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
             string numery = txtSearch.Text.Trim();
@@ -455,6 +455,11 @@ namespace FILAapp
         {
             Wysyłka form1 = new Wysyłka(userId, loggedInUserName, loggedInUserSurname, userType);
             form1.Show();
+        }
+
+        private void Wyszukiwarka_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -30,13 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Naklejka));
             panel1 = new Panel();
-            textBox1 = new TextBox();
-            label6 = new Label();
-            label5 = new Label();
+            lbPackageNumber = new Label();
             lbPackingWorker = new Label();
             label2 = new Label();
             lbDate = new Label();
-            lbWatermeterName = new Label();
             pbQRCode = new PictureBox();
             pictureBox1 = new PictureBox();
             printDocument1 = new System.Drawing.Printing.PrintDocument();
@@ -47,13 +44,10 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(label5);
+            panel1.Controls.Add(lbPackageNumber);
             panel1.Controls.Add(lbPackingWorker);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(lbDate);
-            panel1.Controls.Add(lbWatermeterName);
             panel1.Controls.Add(pbQRCode);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Fill;
@@ -62,36 +56,15 @@
             panel1.Size = new Size(432, 208);
             panel1.TabIndex = 0;
             // 
-            // textBox1
+            // lbPackageNumber
             // 
-            textBox1.BackColor = Color.Black;
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 1.5F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(296, 170);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(124, 3);
-            textBox1.TabIndex = 12;
-            textBox1.TextChanged += textBox1_TextChanged;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label6.Location = new Point(332, 183);
-            label6.Name = "label6";
-            label6.Size = new Size(58, 18);
-            label6.TabIndex = 11;
-            label6.Text = "Podpis";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.Location = new Point(296, 120);
-            label5.Name = "label5";
-            label5.Size = new Size(124, 22);
-            label5.TabIndex = 10;
-            label5.Text = "Sprawdził/a:";
+            lbPackageNumber.AutoSize = true;
+            lbPackageNumber.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            lbPackageNumber.Location = new Point(331, 159);
+            lbPackageNumber.Name = "lbPackageNumber";
+            lbPackageNumber.Size = new Size(50, 18);
+            lbPackageNumber.TabIndex = 10;
+            lbPackageNumber.Text = "label1";
             // 
             // lbPackingWorker
             // 
@@ -123,21 +96,11 @@
             lbDate.TabIndex = 7;
             lbDate.Text = "label4";
             // 
-            // lbWatermeterName
-            // 
-            lbWatermeterName.AutoSize = true;
-            lbWatermeterName.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            lbWatermeterName.Location = new Point(12, 89);
-            lbWatermeterName.Name = "lbWatermeterName";
-            lbWatermeterName.Size = new Size(41, 16);
-            lbWatermeterName.TabIndex = 6;
-            lbWatermeterName.Text = "label1";
-            // 
             // pbQRCode
             // 
-            pbQRCode.Location = new Point(342, 3);
+            pbQRCode.Location = new Point(274, 3);
             pbQRCode.Name = "pbQRCode";
-            pbQRCode.Size = new Size(87, 76);
+            pbQRCode.Size = new Size(155, 139);
             pbQRCode.SizeMode = PictureBoxSizeMode.Zoom;
             pbQRCode.TabIndex = 3;
             pbQRCode.TabStop = false;
@@ -165,6 +128,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Naklejka";
             Text = "Naklejka";
+            FormClosed += Naklejka_FormClosed;
             Shown += Form3_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -180,11 +144,8 @@
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PictureBox pbQRCode;
         private Label lbDate;
-        private Label lbWatermeterName;
-        private Label label6;
-        private Label label5;
         private Label lbPackingWorker;
         private Label label2;
-        private TextBox textBox1;
+        private Label lbPackageNumber;
     }
 }

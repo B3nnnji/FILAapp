@@ -328,6 +328,7 @@
             Name = "Admin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Administracja";
+            FormClosed += Admin_FormClosed;
             Load += Admin_Load;
             Resize += Admin_Resize;
             menuStrip1.ResumeLayout(false);

@@ -339,6 +339,7 @@
             Name = "Wyszukiwarka";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Wyszukiwarka paczek";
+            FormClosed += Wyszukiwarka_FormClosed;
             Load += Wyszukiwarka_Load_1;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             menuStrip1.ResumeLayout(false);
