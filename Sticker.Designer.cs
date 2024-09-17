@@ -128,7 +128,6 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Naklejka";
             Text = "Naklejka";
-            FormClosed += Naklejka_FormClosed;
             Shown += Form3_Shown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
