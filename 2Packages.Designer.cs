@@ -304,7 +304,6 @@
             Name = "Kompletowanie";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Paczka";
-            FormClosed += Kompletowanie_FormClosed;
             Load += Kompletowanie_Load;
             Resize += Kompletowanie_Resize;
             menuStrip1.ResumeLayout(false);

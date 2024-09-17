@@ -503,10 +503,5 @@ namespace FILAapp
             form4.Show();
             this.Hide();
         }
-
-        private void Kompletowanie_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
     }
 }

@@ -64,10 +64,5 @@ namespace FILAapp
             printDocument1.Print();
             this.Close();
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
